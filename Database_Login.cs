@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OOP_Project_Team13
 {
-    public class Database_Login
+    public class Database_Login : IDatabase
     {
         private string filepath;
         public Database_Login(string _filepath)
@@ -50,10 +50,10 @@ namespace OOP_Project_Team13
         //    }
         //    return newFile;
         //}
-        public void AddNewCount()
+        public void AddInformation()
         {
             List<string[]> elements = this.Infos();
-            string[] tab = new string[6];
+            string[] tab = new string[15];
             Console.WriteLine("Name : ");
             tab[0]= Console.ReadLine();
             Console.WriteLine("Surname : ");
