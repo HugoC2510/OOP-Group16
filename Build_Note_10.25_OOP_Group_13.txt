@@ -1,0 +1,4 @@
+Build Note 10/25
+First design on our LucidChart: https://lucid.app/invitations/accept/37e985ab-d890-4fb8-801c-ce0496d2da7d
+we have chosen to use file storage using .csv
+as this thinking step is done we have started coding. 
