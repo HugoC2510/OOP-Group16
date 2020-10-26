@@ -28,7 +28,7 @@ namespace OOP_Project_Team13
             this.phoneNumber = _phoneNumber;
             
         }
-        public abstract string Tostring();
+        public abstract void Tostring();
         
     }
 }

@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace OOP_Project_Team13
 {
-    interface IDatabase
+    public class YearGrade
     {
-        void ModifyFile();
-        void RemoveInformation();
-        void ShowFile();
-        void AddInformation();
+        public string year;
+        public YearGrade(string _year)
+        {
+            this.year = _year;
+        }
     }
 }

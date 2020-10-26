@@ -13,18 +13,19 @@ namespace OOP_Project_Team13
         {
             this.filepath = _filepath;
         }
-        public List<string[]> Infos()
+        
+        public List<string[]> Infos() //creation of a List<string []> after the file
         {
-            string[] lines = System.IO.File.ReadAllLines(filepath);
+            string[] lines = System.IO.File.ReadAllLines(filepath); //we read the file
             List<string []> final = new List<string[]>();
             for (int i = 0; i < lines.Length; i++)
             {
                 string[] columns = lines[i].Split(',');
                 final.Add(columns); 
             }
-            return final;
+            return final; //we return a list<string[]> that contains all the content of the file
         }
-        public void ShowFile()
+        public void ShowFile() //show in the console the file
         {
             List<string[]> file = this.Infos();
             for(int i=0;i<file.Count;i++)
@@ -50,10 +51,11 @@ namespace OOP_Project_Team13
         //    }
         //    return newFile;
         //}
-        public void AddInformation()
+        public void AddInformation() //method that ables the adition of a new count
         {
             List<string[]> elements = this.Infos();
             string[] tab = new string[15];
+            //we ask the user for each information he wants to add
             Console.WriteLine("Name : ");
             tab[0]= Console.ReadLine();
             Console.WriteLine("Surname : ");
@@ -70,7 +72,7 @@ namespace OOP_Project_Team13
 
 
         }
-        public int infoColumn(string word)
+        public int infoColumn(string word) //return the column of the information we want to manipulate
         {
             if(word.ToUpper()=="NAME")
             {
@@ -98,7 +100,7 @@ namespace OOP_Project_Team13
 
             }
         }
-        public void ModifyFile()
+        public void ModifyFile() //modify an information for a particular count
         {
             List<string[]> elements = this.Infos();
             Console.WriteLine("Which information do you want to modify ? ");
@@ -111,25 +113,25 @@ namespace OOP_Project_Team13
             string info = Console.ReadLine();
             elements.ElementAt(line)[choice] = info;
         }
-        public int InformationLine(string name)
+        public int InformationLine(string name) //return the line of the count we want to find
         {
             List<string[]> file = this.Infos();
-            int res = -1;
+            int res = -1; //if nothing is found, we return -1
             for(int i=0;i<file.Count;i++)
             {
                 if(file.ElementAt(i)[0].ToUpper()==name.ToUpper())
                 {
-                    res = i;
+                    res = i; //we return the line of the information we are looking for
                 }
             }
             return res;
         }
-        public void RemoveInformation(string name)
+        public void RemoveInformation() //remove a particular count
         {
             Console.WriteLine("Which account do you want to remove ? ");
             string word = Console.ReadLine().ToUpper();
             List<string[]> elements = this.Infos();
-            int choice = infoColumn(word);
+            int choice = InformationLine(word);
             elements.RemoveAt(choice);
         }
 
