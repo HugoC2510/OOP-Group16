@@ -104,17 +104,18 @@ namespace OOP_Project_Team13
         {
             List<string[]> elements = this.Infos();
             Console.WriteLine("Which information do you want to modify ? ");
+            Console.WriteLine("NAME, " + "SURNAME, " + "MAIL, " + "STATUS " + "or ID"); //to modify if there is more information to check
             string word = Console.ReadLine().ToUpper();
-            int choice = infoColumn(word);
-            Console.WriteLine("For who ? ");
+            int choice = infoColumn(word);   //exception to handle here: if the typing is not correct or doesn't correspond to a choice
+            Console.WriteLine("For who ? ");    //exception to handle here: if the typing is not correct or doesn't correspond to a choice
             string name = Console.ReadLine().ToUpper();
-            int line = InformationLine(name);
-            Console.WriteLine("What is the new information you want to write ? :");
+            int line = InformationLine(name);    //should get an array here to handle Firstname and Surname
+            Console.WriteLine("What is the new information you want to write ? :"); 
             string info = Console.ReadLine();
             elements.ElementAt(line)[choice] = info;
         }
         public int InformationLine(string name) //return the line of the count we want to find
-        {
+        {                                        //here again the name should be a 2 entry array: firstname and surname
             List<string[]> file = this.Infos();
             int res = -1; //if nothing is found, we return -1
             for(int i=0;i<file.Count;i++)
@@ -135,5 +136,5 @@ namespace OOP_Project_Team13
             elements.RemoveAt(choice);
         }
 
-    }
+    }//lacks one method that write in the csv file to enable permanent file storage
 }
