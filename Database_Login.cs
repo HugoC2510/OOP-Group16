@@ -3,36 +3,46 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
-namespace OOP_Project_Team13
+namespace OOP_Group_13_Week_1_2
 {
     public class Database_Login : IDatabase
     {
         private string filepath;
+        List<List<string>> data;
         public Database_Login(string _filepath)
         {
             this.filepath = _filepath;
+            this.data = Infos();
         }
-        
-        public List<string[]> Infos() //creation of a List<string []> after the file
+
+        public List<List<string>> Infos()  //The purpose of this method is to get full informations on every people in the file in a List that can be used further
         {
-            string[] lines = System.IO.File.ReadAllLines(filepath); //we read the file
-            List<string []> final = new List<string[]>();
+            string[] lines = System.IO.File.ReadAllLines(filepath);
+            List<List<string>> final = new List<List<string>>();
+            
             for (int i = 0; i < lines.Length; i++)
             {
+                List<string> temporary = new List<string>();
+                temporary.Clear();
                 string[] columns = lines[i].Split(',');
-                final.Add(columns); 
-            }
-            return final; //we return a list<string[]> that contains all the content of the file
-        }
-        public void ShowFile() //show in the console the file
-        {
-            List<string[]> file = this.Infos();
-            for(int i=0;i<file.Count;i++)
-            {
-                for(int j=0;j<file.ElementAt(i).Length;j++)
+                foreach(string element in columns)
                 {
-                    Console.Write(file.ElementAt(i).ElementAt(j) + "; ");
+                    temporary.Add(element);
+                }
+                final.Add(temporary);
+            }
+            return final;     //result is an List of array of string. Each array contains all data on a person
+        }
+
+        public void ShowFile() //The purpose of this method is to show all informations on every people in the file
+        {
+            for(int i=0;i<data.Count;i++)
+            {
+                for(int j=0;j<data.ElementAt(i).Count;j++)
+                {
+                    Console.Write(data.ElementAt(i).ElementAt(j) + "; ");
                 }
                 Console.WriteLine(" ");
             }
@@ -51,28 +61,29 @@ namespace OOP_Project_Team13
         //    }
         //    return newFile;
         //}
-        public void AddInformation() //method that ables the adition of a new count
+
+        public void AddInformation() //The purpose of this method is to add informations of one person in the file, in order to create a profile for exemple
         {
-            List<string[]> elements = this.Infos();
-            string[] tab = new string[15];
-            //we ask the user for each information he wants to add
+            data = Infos();
+            List<string> newAccount = new List<string>();
             Console.WriteLine("Name : ");
-            tab[0]= Console.ReadLine();
+            newAccount.Add(Console.ReadLine());
             Console.WriteLine("Surname : ");
-            tab[1] = Console.ReadLine();
+            newAccount.Add(Console.ReadLine());
             Console.WriteLine("Mail : ");
-            tab[2] = Console.ReadLine();
+            newAccount.Add(Console.ReadLine());
             Console.WriteLine("Status : ");
-            tab[3] = Console.ReadLine();
+            newAccount.Add(Console.ReadLine());
             Console.WriteLine("ID : ");
-            tab[4] = Console.ReadLine();
+            newAccount.Add(Console.ReadLine());
             Console.WriteLine("Password : ");
-            tab[5] = Console.ReadLine();
-            elements.Add(tab);
-
-
+            newAccount.Add(Console.ReadLine());
+            data.Add(newAccount);
+            WriteInCsv();
+            data = Infos();
         }
-        public int infoColumn(string word) //return the column of the information we want to manipulate
+
+        public int infoColumn(string word)  //to modify if there is more information to check
         {
             if(word.ToUpper()=="NAME")
             {
@@ -97,44 +108,126 @@ namespace OOP_Project_Team13
             else
             {
                 return 5;
-
             }
         }
-        public void ModifyFile() //modify an information for a particular count
+
+        public void ModifyFile() //This method is used to modifiy someone's informations
         {
-            List<string[]> elements = this.Infos();
-            Console.WriteLine("Which information do you want to modify ? ");
-            Console.WriteLine("NAME, " + "SURNAME, " + "MAIL, " + "STATUS " + "or ID"); //to modify if there is more information to check
-            string word = Console.ReadLine().ToUpper();
-            int choice = infoColumn(word);   //exception to handle here: if the typing is not correct or doesn't correspond to a choice
-            Console.WriteLine("For who ? ");    //exception to handle here: if the typing is not correct or doesn't correspond to a choice
-            string name = Console.ReadLine().ToUpper();
-            int line = InformationLine(name);    //should get an array here to handle Firstname and Surname
-            Console.WriteLine("What is the new information you want to write ? :"); 
-            string info = Console.ReadLine();
-            elements.ElementAt(line)[choice] = info;
-        }
-        public int InformationLine(string name) //return the line of the count we want to find
-        {                                        //here again the name should be a 2 entry array: firstname and surname
-            List<string[]> file = this.Infos();
-            int res = -1; //if nothing is found, we return -1
-            for(int i=0;i<file.Count;i++)
+            data = Infos();
+            Console.WriteLine("Who is the person you want to modify information? : enter Firstname  or ID");
+            string firstName = Console.ReadLine().ToUpper();
+            bool numeric = true;
+            try
             {
-                if(file.ElementAt(i)[0].ToUpper()==name.ToUpper())
-                {
-                    res = i; //we return the line of the information we are looking for
+                int.Parse(firstName);               
+            }
+            catch
+            {
+                numeric = false;
+            }
+            int line;
+            if (numeric == true)
+            {
+                line = InformationLine(Convert.ToString(firstName));
+            }
+            else
+            {
+                Console.WriteLine("Enter Surname ");
+                string surName = Console.ReadLine().ToUpper();
+                string[] names = new string[2];
+                names[0] = Convert.ToString(firstName); names[1] = surName;
+                line = InformationLine(names);      //exception to handle here if the person is not found              
+            }
+            string word="";
+            while(word.ToUpper() != "FINISH")
+            {
+                Console.WriteLine("Current informations of " + data.ElementAt(line)[0] + " " + data.ElementAt(line)[1] + " ID: " + data.ElementAt(line)[2]);
+                Console.WriteLine("Firsname: " + data.ElementAt(line)[0] + "  Surname: " + data.ElementAt(line)[1] + " ID: " + data.ElementAt(line)[2]);
+                Console.WriteLine("email: " + data.ElementAt(line)[3] + " Status: " + data.ElementAt(line)[4]);
+                Console.WriteLine("What information do you want to modify ? ");
+                Console.WriteLine("NAME, " + "SURNAME, " + "MAIL, " + "STATUS " + "or ID");//to modify if there is more information to check
+                Console.WriteLine("Type: Finish, to end modifications");
+                word = Console.ReadLine();
+                int choice = infoColumn(word.ToUpper());      //exception to handle here: if the typing is not correct or doesn't correspond to a choice
+                Console.WriteLine("Type modification :");
+                string modification = Console.ReadLine();
+                data.ElementAt(line)[choice] = modification;
+            }            
+            WriteInCsv();
+        }
+
+        public int InformationLine(string[] names) //this method enable to find the line containing the datas of one person using its name to find it
+        {
+            data = Infos();
+            int res = -1;  //if nothing is found, it returns -1
+            for (int i=0;i<data.Count;i++)
+            {
+                if(data.ElementAt(i)[0].ToUpper()==names[0].ToUpper() && data.ElementAt(i)[1].ToUpper() == names[1].ToUpper()) 
+                {                   
+                    res = i;
                 }
             }
             return res;
         }
-        public void RemoveInformation() //remove a particular count
+
+        public int InformationLine(string number) //this method enable to find the line containing the datas of one person using its ID to find it
         {
-            Console.WriteLine("Which account do you want to remove ? ");
-            string word = Console.ReadLine().ToUpper();
-            List<string[]> elements = this.Infos();
-            int choice = InformationLine(word);
-            elements.RemoveAt(choice);
+            data = Infos();
+            int res = -1;  //if nothing is found, it returns -1
+            for (int i = 0; i < data.Count; i++)
+            {
+                if (data.ElementAt(i)[2].ToUpper() == number)
+                {
+                    res = i;
+                }
+            }
+            return res;
         }
 
-    }//lacks one method that write in the csv file to enable permanent file storage
+        public void RemoveInformation() //cette fonction permet de supprimer un utilisateur
+        {
+            data = Infos();
+            Console.WriteLine("Which account do you want to remove ? Type Firstname or ID ");          
+            string firstName = Console.ReadLine().ToUpper();
+            bool numeric = true;
+            try
+            {
+                int.Parse(firstName);
+            }
+            catch
+            {
+                numeric = false;
+            }
+            int line;
+            if (numeric == true)
+            {
+                line = InformationLine(Convert.ToString(firstName));
+            }
+            else
+            {
+                Console.WriteLine("Enter Surname ");
+                string surName = Console.ReadLine().ToUpper();
+                string[] names = new string[2];
+                names[0] = Convert.ToString(firstName); names[1] = surName;
+                line = InformationLine(names);      //exception to handle here if the person is not found              
+            }          
+            data.RemoveAt(line);
+        }
+
+        public void WriteInCsv()
+        {
+            File.WriteAllText(filepath,"");
+            StreamWriter fileWriteLine =new StreamWriter(filepath, true);
+            for(int nblines = 0; nblines <data.Count; nblines++)
+            {
+                string line = "";
+                for (int i = 0; i < data[nblines].Count -1; i++)
+                {                   
+                    line += data[nblines][i] + ",";
+                }
+                line += data[nblines][data[nblines].Count()];
+                fileWriteLine.WriteLine(line);
+            }           
+        }    
+    }  
 }
