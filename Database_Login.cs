@@ -20,13 +20,12 @@ namespace OOP_Group_13_Week_1_2
         public List<List<string>> Infos()  //The purpose of this method is to get full informations on every people in the file in a List that can be used further
         {
             string[] lines = System.IO.File.ReadAllLines(filepath);
-            List<List<string>> final = new List<List<string>>();
-            
-            for (int i = 0; i < lines.Length; i++)
+            List<List<string>> final = new List<List<string>>();          
+            for (int i = 0; i < lines.Length; i++)   
             {
                 List<string> temporary = new List<string>();
                 temporary.Clear();
-                string[] columns = lines[i].Split(',');
+                string[] columns = lines[i].Split(';');               
                 foreach(string element in columns)
                 {
                     temporary.Add(element);
@@ -38,6 +37,7 @@ namespace OOP_Group_13_Week_1_2
 
         public void ShowFile() //The purpose of this method is to show all informations on every people in the file
         {
+            data = Infos();
             for(int i=0;i<data.Count;i++)
             {
                 for(int j=0;j<data.ElementAt(i).Count;j++)
@@ -78,6 +78,12 @@ namespace OOP_Group_13_Week_1_2
             newAccount.Add(Console.ReadLine());
             Console.WriteLine("Password : ");
             newAccount.Add(Console.ReadLine());
+            Console.WriteLine("Sexe : ");
+            newAccount.Add(Console.ReadLine());
+            Console.WriteLine("Age: ");
+            newAccount.Add(Console.ReadLine());
+            Console.WriteLine("Phone number : ");
+            newAccount.Add(Console.ReadLine());
             data.Add(newAccount);
             WriteInCsv();
             data = Infos();
@@ -105,9 +111,25 @@ namespace OOP_Group_13_Week_1_2
             {
                 return 4;
             }
-            else
+            if (word.ToUpper() == "PASSWORD")
             {
                 return 5;
+            }
+            if (word.ToUpper() == "SEXE")
+            {
+                return 6;
+            }
+            if (word.ToUpper() == "AGE")
+            {
+                return 7;
+            }
+            if (word.ToUpper() == "PHONE NUMBER")
+            {
+                return 8;
+            }
+            else
+            {
+                return -1;
             }
         }
 
@@ -129,6 +151,7 @@ namespace OOP_Group_13_Week_1_2
             if (numeric == true)
             {
                 line = InformationLine(Convert.ToString(firstName));
+                Console.WriteLine(line);
             }
             else
             {
@@ -141,17 +164,21 @@ namespace OOP_Group_13_Week_1_2
             string word="";
             while(word.ToUpper() != "FINISH")
             {
-                Console.WriteLine("Current informations of " + data.ElementAt(line)[0] + " " + data.ElementAt(line)[1] + " ID: " + data.ElementAt(line)[2]);
-                Console.WriteLine("Firsname: " + data.ElementAt(line)[0] + "  Surname: " + data.ElementAt(line)[1] + " ID: " + data.ElementAt(line)[2]);
-                Console.WriteLine("email: " + data.ElementAt(line)[3] + " Status: " + data.ElementAt(line)[4]);
+                Console.WriteLine("Current informations of " + data.ElementAt(line)[0] + " " + data.ElementAt(line)[1] + " ID: " + data.ElementAt(line)[4] + " :");
+                Console.WriteLine("Firsname: " + data.ElementAt(line)[0] + "  Surname: " + data.ElementAt(line)[1] + " Mail: " + data.ElementAt(line)[2]);
+                Console.WriteLine("Status: " + data.ElementAt(line)[3] + " ID: " + data.ElementAt(line)[4] + " Password: " + data.ElementAt(line)[5] + " sexe: " + data.ElementAt(line)[6]);
+                Console.WriteLine(" Age: " + data.ElementAt(line)[7] + " Phonenumber: " + data.ElementAt(line)[8]);
                 Console.WriteLine("What information do you want to modify ? ");
-                Console.WriteLine("NAME, " + "SURNAME, " + "MAIL, " + "STATUS " + "or ID");//to modify if there is more information to check
-                Console.WriteLine("Type: Finish, to end modifications");
+                Console.WriteLine("NAME, " + "SURNAME, " + "MAIL, " + "STATUS, " + "ID, " + "PASSWORD, " + "SEXE, " + "AGE, " + "or PHONE NUMBER");//to modify if there is more information to check
+                Console.WriteLine("Type: FINISH, to end modifications");
                 word = Console.ReadLine();
-                int choice = infoColumn(word.ToUpper());      //exception to handle here: if the typing is not correct or doesn't correspond to a choice
-                Console.WriteLine("Type modification :");
-                string modification = Console.ReadLine();
-                data.ElementAt(line)[choice] = modification;
+                if (word != "FINISH")
+                {
+                    int choice = infoColumn(word.ToUpper());      //exception to handle here: if the typing is not correct or doesn't correspond to a choice
+                    Console.WriteLine("Type modification :");
+                    string modification = Console.ReadLine();
+                    data.ElementAt(line)[choice] = modification;
+                }                
             }            
             WriteInCsv();
         }
@@ -160,7 +187,7 @@ namespace OOP_Group_13_Week_1_2
         {
             data = Infos();
             int res = -1;  //if nothing is found, it returns -1
-            for (int i=0;i<data.Count;i++)
+            for (int i=0;i<data.Count();i++)
             {
                 if(data.ElementAt(i)[0].ToUpper()==names[0].ToUpper() && data.ElementAt(i)[1].ToUpper() == names[1].ToUpper()) 
                 {                   
@@ -172,11 +199,12 @@ namespace OOP_Group_13_Week_1_2
 
         public int InformationLine(string number) //this method enable to find the line containing the datas of one person using its ID to find it
         {
+            
             data = Infos();
-            int res = -1;  //if nothing is found, it returns -1
-            for (int i = 0; i < data.Count; i++)
+            int res = -1;  //if nothing is found, it returns -1            
+            for (int i = 0; i < data.Count(); i++)
             {
-                if (data.ElementAt(i)[2].ToUpper() == number)
+                if (data.ElementAt(i)[4].ToUpper() == number)
                 {
                     res = i;
                 }
@@ -210,24 +238,33 @@ namespace OOP_Group_13_Week_1_2
                 string[] names = new string[2];
                 names[0] = Convert.ToString(firstName); names[1] = surName;
                 line = InformationLine(names);      //exception to handle here if the person is not found              
-            }          
+            }
+            Console.WriteLine("Current informations of " + data.ElementAt(line)[0] + " " + data.ElementAt(line)[1] + " ID: " + data.ElementAt(line)[4] + " :");
+            Console.WriteLine("Firsname: " + data.ElementAt(line)[0] + "  Surname: " + data.ElementAt(line)[1] + " Mail: " + data.ElementAt(line)[2]);
+            Console.WriteLine("Status: " + data.ElementAt(line)[3] + " ID: " + data.ElementAt(line)[4] + " Password: " + data.ElementAt(line)[5] + " sexe: " + data.ElementAt(line)[6]);
+            Console.WriteLine("Age: " + data.ElementAt(line)[7] + " Phonenumber: " + data.ElementAt(line)[8]);
+            Console.WriteLine();
+            Console.WriteLine("Account removed");
+            Console.Read();
             data.RemoveAt(line);
+            WriteInCsv();
         }
 
         public void WriteInCsv()
         {
-            File.WriteAllText(filepath,"");
-            StreamWriter fileWriteLine =new StreamWriter(filepath, true);
-            for(int nblines = 0; nblines <data.Count; nblines++)
+            File.WriteAllText(filepath, "");
+            StreamWriter file = new StreamWriter(filepath, true);           
+            for (int nblines = 0; nblines < data.Count(); nblines++)
             {
                 string line = "";
-                for (int i = 0; i < data[nblines].Count -1; i++)
-                {                   
-                    line += data[nblines][i] + ",";
+                for (int i = 0; i < data[nblines].Count - 1; i++)
+                {
+                    line += data[nblines][i] + ";";
                 }
-                line += data[nblines][data[nblines].Count()];
-                fileWriteLine.WriteLine(line);
-            }           
+                line += data[nblines][data[nblines].Count()-1];
+                file.WriteLine(line);
+            }
+            file.Close();
         }    
     }  
 }
