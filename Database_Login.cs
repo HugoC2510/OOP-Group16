@@ -61,6 +61,39 @@ namespace OOP_Group_13_Week_1_2
         //    }
         //    return newFile;
         //}
+        
+        public void ShowInformation()//this method shows all information of one person in the database
+        {
+            data = Infos();
+            Console.WriteLine("Who is the person you want to see information? : enter Firstname  or ID");
+            string firstName = Console.ReadLine().ToUpper();
+            bool numeric = true;
+            try
+            {
+                int.Parse(firstName);
+            }
+            catch
+            {
+                numeric = false;
+            }
+            int line;
+            if (numeric == true)
+            {
+                line = InformationLine(Convert.ToString(firstName));
+            }
+            else
+            {
+                Console.WriteLine("Enter Surname ");
+                string surName = Console.ReadLine().ToUpper();
+                string[] names = new string[2];
+                names[0] = Convert.ToString(firstName); names[1] = surName;
+                line = InformationLine(names);      //exception to handle here if the person is not found              
+            }
+            Console.WriteLine("Current informations of " + data.ElementAt(line)[0] + " " + data.ElementAt(line)[1] + " ID: " + data.ElementAt(line)[4] + " :");
+            Console.WriteLine("Firsname: " + data.ElementAt(line)[0] + "  Surname: " + data.ElementAt(line)[1] + " Mail: " + data.ElementAt(line)[2]);
+            Console.WriteLine("Status: " + data.ElementAt(line)[3] + " ID: " + data.ElementAt(line)[4] + " Password: " + data.ElementAt(line)[5] + " sexe: " + data.ElementAt(line)[6]);
+            Console.WriteLine(" Age: " + data.ElementAt(line)[7] + " Phonenumber: " + data.ElementAt(line)[8]);
+        }
 
         public void AddInformation() //The purpose of this method is to add informations of one person in the file, in order to create a profile for exemple
         {
@@ -151,7 +184,6 @@ namespace OOP_Group_13_Week_1_2
             if (numeric == true)
             {
                 line = InformationLine(Convert.ToString(firstName));
-                Console.WriteLine(line);
             }
             else
             {
