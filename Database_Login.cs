@@ -93,6 +93,7 @@ namespace OOP_Group_13_Week_1_2
             Console.WriteLine("Firsname: " + data.ElementAt(line)[0] + "  Surname: " + data.ElementAt(line)[1] + " Mail: " + data.ElementAt(line)[2]);
             Console.WriteLine("Status: " + data.ElementAt(line)[3] + " ID: " + data.ElementAt(line)[4] + " Password: " + data.ElementAt(line)[5] + " sexe: " + data.ElementAt(line)[6]);
             Console.WriteLine(" Age: " + data.ElementAt(line)[7] + " Phonenumber: " + data.ElementAt(line)[8]);
+            console.Read();
         }
 
         public void AddInformation() //The purpose of this method is to add informations of one person in the file, in order to create a profile for exemple
