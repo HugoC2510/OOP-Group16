@@ -9,23 +9,24 @@ namespace OOP_Project_Team13
     public class Student : Person
     {
         public YearGrade year;
-        public WorkGroup group;
+        public List<WorkGroup> group;
         public string program;
         public List<int> marks;
         public int fees=0;
         public int paymentMode;
         private static int due_fees;
-        public Student(string _name, string _surname,int _age,char _sex,string _email, string _phoneNumber, string _ID,WorkGroup _group, string _program, List<int> _marks, int _fees, YearGrade _year)
+        public int absence;
+        public string password;
+        public Student(string _name, string _surname,int _age,char _sex,string _email, string _phoneNumber, string _ID,string _password)
             : base(_ID, _name, _surname, _age, _sex, _email, _phoneNumber)
+
         {
             this.status = "Student";
-            this.year = _year;
-            this.group = _group;
-            this.fees = _fees;
-            this.marks = _marks;
-            this.program = _program;
+            this.password = _password;
             due_fees = 8000;
+            absence = 0;
         }
+
         public override void Tostring() //we show on the console a description of the object
         {
             Console.WriteLine("Name : " + name
@@ -35,10 +36,27 @@ namespace OOP_Project_Team13
                 + "; Email : " + email
                 + "; Phone Number : " + phoneNumber
                 + "; ID : " + ID
-                + "; Workgroup : "+ group.name
                 + "; Year grade : "+year.year
                 + "; Program : "+program
                 + "; Status : " + status);
+        }
+        public override bool ConnectionCheck()
+        {
+            bool res = false;
+            Console.WriteLine("What is your password ? "); //we ask the administrator to write his password
+            string password = Console.ReadLine();
+            int tries = 2;
+            while (password != this.password && tries > 0)
+            {
+                Console.WriteLine("The password is incorrect, try again (you still have " + tries + " tries)");
+                password = Console.ReadLine();
+                tries--;
+            }
+            if (password == this.password)
+            {
+                res = true;
+            }
+            return res;
         }
         public bool CheckPayment()//check if the sudent has paid all his fees, return true if it's the case
         {
@@ -51,6 +69,7 @@ namespace OOP_Project_Team13
                 return false;
             }
         }
+
         public void AskPaymentMode()//the student chooses is payment mode
         {
             Console.WriteLine("If you want to pay all your fees with only one payment, press 1. If you want to pay with 8 mensuality, press 2 ");

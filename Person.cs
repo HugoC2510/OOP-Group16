@@ -29,6 +29,7 @@ namespace OOP_Project_Team13
             
         }
         public abstract void Tostring();
+        public abstract bool ConnectionCheck();
         
     }
 }
