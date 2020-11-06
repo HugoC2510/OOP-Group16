@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OOP_Project_Team13
+namespace ProjectVersion2
 {
     public class Teacher : Person
     {
@@ -12,10 +12,9 @@ namespace OOP_Project_Team13
         public string password;
         
         public Teacher(string _ID, string _name, string _surname, int _age, char _sex, string _email, string _phoneNumber, string _password)
-            :base( _ID, _name,_surname, _age,  _sex, _email,  _phoneNumber)
+            :base( _ID, _name,_surname, _age,  _sex, _email,  _phoneNumber, _phoneNumber)
         {
             this.status = "Teacher";
-            this.password = _password;
         }
         public override void Tostring() //we show on the console a description of the object
         {
@@ -46,25 +45,8 @@ namespace OOP_Project_Team13
             }
             return res;
         }
-        public void ManageAttendance()
-        {
-            bool valid = ConnectionCheck();
-            if(valid==true)
-            {
-                Console.WriteLine("What is the student's last name : ");
-                string stud = Console.ReadLine().ToUpper();
-                foreach(WorkGroup w in groups)
-                {
-                    foreach(Student s in w.members)
-                    {
-                        if(s.name.ToUpper()==stud)
-                        {
-                            s.absence += 1;
-                        }
-                    }
-                }
-            }
-        }
+        
+        
 
         
     }

@@ -4,29 +4,82 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OOP_Project_Team13
+namespace ProjectVersion2
 {
     public class Student : Person
     {
         public YearGrade year;
         public List<WorkGroup> group;
+        public List<Course> courseList;
         public string program;
-        public List<int> marks;
+        public List<List<double>> marks; //each course will get its ist of marks
         public int fees=0;
         public int paymentMode;
         private static int due_fees;
-        public int absence;
-        public string password;
-        public Student(string _name, string _surname,int _age,char _sex,string _email, string _phoneNumber, string _ID,string _password)
-            : base(_ID, _name, _surname, _age, _sex, _email, _phoneNumber)
+        public Student(string _name, string _surname,int _age,char _sex,string _email, string _phoneNumber, string _ID, string password)
+            : base(_ID, _name, _surname, _age, _sex, _email, _phoneNumber,password)
 
         {
             this.status = "Student";
-            this.password = _password;
             due_fees = 8000;
-            absence = 0;
         }
 
+        //public bool CompareMarks(Student stud) 
+        //{
+        //    bool same = true;
+        //    foreach(List<double> course in marks)
+        //    {
+        //        if (course.Count == stud.marks.course.Count) //it requires to get the same number of marks in every course to say it is the same
+        //        {                                     //if the sum of all marks are equivalent, they are considered to be the same no matter the order
+        //            double sumA;
+        //            double sumB;
+        //            for (int i = 0; i < marks.Count; i++)
+        //            {
+
+        //            }
+        //        }
+        //    }
+
+        //    return same;
+        //}
+
+        public bool CompareCourse(Student stud)  //this compare if the students follow the same courses. this method is not used for now
+        {
+            bool result = true;
+            if (stud.courseList.Count == courseList.Count)
+            {
+                int nbCourseFound = 0;
+                foreach (Course course in courseList)
+                {
+                    for(int i = 0; i < stud.courseList.Count; i++)
+                    {
+                        if (course.name == stud.courseList[i].name)
+                        {
+                            nbCourseFound ++;
+                        }
+                    }
+                }
+                if (nbCourseFound != courseList.Count)
+                {
+                    result = false;
+                }
+            }
+            else
+            {
+                result = false;
+            }
+            return result;
+        }
+
+        public bool EqualStudent(Student obj) //need to add comparion List workgroup equal
+        {
+            bool same = true;
+            if (EqualPerson(obj as Person)!= true || obj.year!=year || obj.program!= program || obj.fees!=fees || obj.paymentMode!=paymentMode || CompareCourse(obj)!=true)
+            {
+                same = false;
+            }
+            return same;
+        }
         public override void Tostring() //we show on the console a description of the object
         {
             Console.WriteLine("Name : " + name
@@ -68,6 +121,50 @@ namespace OOP_Project_Team13
             {
                 return false;
             }
+        }
+
+        public int FindStudentInList(List<Student> list) //return the indexe of the researched student in the list
+        {
+            Console.WriteLine("To find the student, type Firstname or ID ");
+            string firstName = Console.ReadLine().ToUpper();
+            bool numeric = true;
+            try
+            {
+                int.Parse(firstName);
+            }
+            catch
+            {
+                numeric = false;
+            }
+            int line;
+            bool found = false;
+            if (numeric == true)
+            {
+                for(int i=0;i<list.Count;i++)
+                {
+                    if (list[i].ID == firstName)
+                    {
+                        found = true;
+                        return i;
+                    }
+                }
+               
+            }
+            else
+            {
+                Console.WriteLine("Enter Surname ");
+                string surName = Console.ReadLine().ToUpper();
+                for(int i= 0; i < list.Count; i++)
+                {
+                    if (list[i].name.ToUpper() == firstName && list[i].surname.ToUpper()== surName)
+                    {
+                        found = true;
+                        return i;
+                    }
+                }
+                //exception to handle here if the person is not found              
+            }
+            return -1; //return -1 if nothing is found.
         }
 
         public void AskPaymentMode()//the student chooses is payment mode

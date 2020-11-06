@@ -4,62 +4,150 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OOP_Project_Team13
+namespace ProjectVersion2
 {
-    public class Course
+    public class Course  //comment stocker la classe course et ses etudiants a long terme
     {
-        public List<int> marks;
         public List<WorkGroup> allGroups;
-        public List<Teacher> teachers;
         public string name;
+        public Database_Marks dataFileMarks;
 
-        public Course(string _name,List<int> _marks, List<WorkGroup> _allGroups, List<Teacher> _teachers)
+        public Course(string _name)
         {
-            this.marks = _marks;
-            this.allGroups = _allGroups;
-            this.teachers = _teachers;
             this.name = _name;
         }
-        public void ModifyName()//this method ables somebody to modify the name of the course
+
+        public void CreateCsvFile()
         {
-            Console.WriteLine("The actual name of this course is : " + name);
-            Console.WriteLine("What name do you want for this course ? ");
-            this.name = Console.ReadLine();
+            Console.WriteLine("type the string path of the new file");
+            string path = Console.ReadLine();
+            dataFileMarks = new Database_Marks(name + "dataFileMarks", path);
         }
-        public void AddMarks()//this method ables a teacher to add a mark
+        public void AddWrkGroupToCourse() //this method allow the creation of workgroup inside a course
         {
-            Console.WriteLine("What is your first name ? ");
-            string firstName = Console.ReadLine().ToUpper();
-            Console.WriteLine("What is your last name ? ");
-            string name = Console.ReadLine().ToUpper();
-            bool exist=teachers.Exists(x => x.name.ToUpper() == name); //we check if the teacher is able to add a mark to this course
-            if(exist==true)
+            Console.WriteLine("type the name of the workGroup: ");
+            string name = Console.ReadLine();
+            WorkGroup group = new WorkGroup(name);
+            allGroups.Add(group);
+        }
+        
+        public void AddStudentIntoWorkGroupOfaCourse(Student student) //this method will add a student into a workgroup and update the data file.This method will be called in administrator
+        {
+            Console.WriteLine("status of the workGroup in this course: " + name);
+            foreach(WorkGroup group in allGroups)
             {
-                Teacher prof = teachers.Find(x => x.name.ToUpper() == name);
-                Console.WriteLine("What is your password ? "); //we ask the teacher to write his password
-                string password = Console.ReadLine();
-                int tries = 2;
-                while(password!=prof.password && tries>0)
+                Console.WriteLine(group.name + " "  + "there is  " + group.members.Count+ " students in this group the professor is: " + group.professor.name + " " + group.professor.surname);
+            }  
+            bool correctName = false;
+            string info = "";
+            while (correctName == false && info!="exit")
+            {
+                Console.WriteLine("in wich group add the student? type the name of the group or type: exit");
+                info = Console.ReadLine();
+                foreach (WorkGroup group in allGroups)
                 {
-                    Console.WriteLine("The password is incorrect, try again (you still have " + tries + " tries)");
-                    password = Console.ReadLine();
-                    tries--;
+                    if (group.name == info)
+                    {
+                        correctName = true;
+                        group.members.Add(student);
+                        dataFileMarks.AddStudentInWorkGroup(student, info); //add the student in the csv file with its workgroup name
+                        Console.WriteLine("the student has been hadded to the workGroup " + group.name);
+                    }
                 }
-                if(password==prof.password)//if it's okay, the mark can be added
+            }          
+        }
+
+        public void ModifyTeacherIntoWorkGroupOfaCourse(Teacher teacher) //this method will add a student into a workgroup and  update the data file
+        {
+            Console.WriteLine("status of the workGroups in this course: " + name);
+            foreach (WorkGroup group in allGroups)
+            {
+                Console.WriteLine(group.name + " " + "there is  " + group.members.Count + " students in this group the professor is: " + group.professor.name +" "+ group.professor.surname);
+            }
+            bool correctName = false;
+            string info = "";
+            while (correctName == false && info != "exit")
+            {
+                Console.WriteLine("in wich group modify the teacher? type the name of the group or type: exit");
+                info = Console.ReadLine();
+                foreach (WorkGroup group in allGroups)
                 {
-                    Console.WriteLine("What mark do you want to add ? ");
-                    int mark = Convert.ToInt32(Console.ReadLine());
-                    marks.Add(mark);
-                }
-                else
-                {
-                    Console.WriteLine("Sorry, try later");
+                    if (group.name == info)
+                    {
+                        correctName = true;
+                        group.professor=teacher;
+                        dataFileMarks.ModifyTeacherInWorkGroup(teacher, info);
+                        Console.WriteLine("the teacher has been changed in the workGroup " + group.name);
+                    }
                 }
             }
-            else
+        }
+
+        public void DeleteStudentInWorkGroup()
+        {
+            string firstName = "";
+            bool found = false;
+            string surName = "";
+            while(found==false && firstName!="exit" && surName!="exit")
             {
-                Console.WriteLine("Sorry, you are not able to modify marks for this course");
-            }
+                Console.WriteLine("Who is the student you want to remove from this course? type his Firstname or his ID. type <<exit>> to leave");
+                firstName = Console.ReadLine().ToUpper();
+                bool numeric = true;
+                try
+                {
+                    int.Parse(firstName);
+                }
+                catch
+                {
+                    numeric = false;
+                }
+                int line;
+                if (numeric == true)
+                {
+                    foreach (WorkGroup group in allGroups) //we must also reemove the student from the workgroup list
+                    {
+                        foreach (Student student in group.members)
+                        {
+                            if (student.ID == firstName)
+                            {
+                                group.members.Remove(student);
+                                dataFileMarks.DeleteStudentInWorkgroup(student);
+                                found = true;
+                                Console.WriteLine("The student has been removed"); //the student should be removed from the csv now.
+                            }
+                        }
+                    }
+                }
+                else  
+                {
+                    Console.WriteLine("Enter Surname. Type leave to exit ");
+                    surName = Console.ReadLine().ToUpper();
+                    string[] names = new string[2];
+                    names[0] = Convert.ToString(firstName); names[1] = surName;
+                    foreach (WorkGroup group in allGroups) //we must also reemove the student from the workgroup list
+                    {
+                        foreach (Student student in group.members)
+                        {
+                            if (student.name == firstName && student.surname == surName)
+                            {
+                                group.members.Remove(student);
+                                dataFileMarks.DeleteStudentInWorkgroup(student);
+                                found = true;
+                                Console.WriteLine("The student has been removed");
+                            }
+                        }
+                    }
+                }
+                if(found == false)
+                {
+                    Console.WriteLine("student not found");
+                }
+            }           
+        }
+
+        public void ModifyMark()
+        {
+            dataFileMarks.ModifMarks();
         }
         
     }

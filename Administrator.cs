@@ -4,17 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OOP_Project_Team13
+namespace ProjectVersion2
 {
     public class Administrator: Person
     {
         public YearGrade year;
         public string password;
         public Administrator(string _ID, string _name, string _surname, int _age, char _sex, string _email, string _phoneNumber,string _password)
-            :base(_ID, _name,_surname, _age, _sex, _email, _phoneNumber)
+            :base(_ID, _name,_surname, _age, _sex, _email, _phoneNumber, _password)
         {
             this.status = "Administrator";
-            this.password = _password;
         }
 
         public override void Tostring() //we show on the console a description of the object
@@ -46,19 +45,8 @@ namespace OOP_Project_Team13
             }
             return res;
         }
-        public void CheckAttendance()
-        {
-            bool verif = ConnectionCheck();
-            if(verif==true)
-            {
-                Database_Login login = new Database_Login("DataFileLogin1.csv");
-                List<Student> group = login.StudentGroup();
-                Student find = this.FindStudent(group);
-                Console.WriteLine("The number of absence of " + find.name + " " + find.surname + " is : " + find.absence);
-
-
-            }
-        }
+        
+        
         public Student FindStudent(List<Student> elements)
         {
             

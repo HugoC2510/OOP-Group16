@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace OOP_Project_Team13
+namespace ProjectVersion2
 {
-    public class Database_Login : IDatabase
-    {
+    public class Database_Login : IDatabase  //this class and its file is very important as every person's account is saved there.
+    {                                        //finished on 4/11
         private string filepath;
         List<List<string>> data;
         public Database_Login(string _filepath)
@@ -16,6 +16,7 @@ namespace OOP_Project_Team13
             this.filepath = _filepath;
             this.data = Infos();
         }
+
         public List<List<string>> Infos()  //The purpose of this method is to get full informations on every people in the file in a List that can be used further
         {
             string[] lines = System.IO.File.ReadAllLines(filepath);
@@ -236,7 +237,7 @@ namespace OOP_Project_Team13
             }
             return res;
         }
-        public void RemoveInformation() //cette fonction permet de supprimer un utilisateur
+        public void RemoveInformation() //this method enable the suppression of an user
         {
             data = Infos();
             Console.WriteLine("Which account do you want to remove ? Type Firstname or ID ");

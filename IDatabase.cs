@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OOP_Project_Team13
+namespace ProjectVersion2
 {
     interface IDatabase
     {
@@ -12,5 +12,6 @@ namespace OOP_Project_Team13
         void RemoveInformation();
         void ShowFile();
         void AddInformation();
+        void WriteInCsv();
     }
 }
