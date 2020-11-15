@@ -7,15 +7,14 @@ using System.IO;
 
 namespace ProjectVersion2
 {
-    public class Database_Marks//:IDatabase  // mandatory template for this file: firstname, surname, id, worgroupName, professor name, professor surname and then marks
+    public class Database_Attendance//:IDatabase  // mandatory template for this file: firstname, surname, id, worgroupName, professor name, professor surname and then all string about attendance
     {
         private string filepath; //file path
         List<List<string>> data; //all data related to the file
         List<WorkGroup> wrkGroupList; //all students are supposed to be inside Workgroups. this is used only on the first creation of the file, when the course is created
-        //course name
         public string courseName;
 
-        public Database_Marks(string _name, string _filepath, List<WorkGroup> _wrkGroupList) //this constructor is to create the file when creating a new course
+        public Database_Attendance(string _name, string _filepath, List<WorkGroup> _wrkGroupList) //this constructor is to create the file when creating a new course
         {                                                                                    //from an administrator profile
             this.courseName = _name;
             this.wrkGroupList = _wrkGroupList;
@@ -23,7 +22,7 @@ namespace ProjectVersion2
             this.data = Infos();
             WriteInCsv();
         }
-        public Database_Marks(string _name, string _filepath)//this constructeur suits better when the csv file already exist.
+        public Database_Attendance(string _name, string _filepath)//this constructeur suits better when the csv file already exist.
         {
             this.courseName = _name;
             this.filepath = _filepath;
@@ -31,8 +30,6 @@ namespace ProjectVersion2
             this.data = new List<List<string>>();
             WriteInCsv();
         }
-
-        //basic method of this class to write and save a csv
 
         public List<List<string>> Infos()  //firstname surname id worgroup marks
         {
@@ -87,6 +84,7 @@ namespace ProjectVersion2
             file.Close();
         }
 
+        //method of this class:
         public List<List<string>> ReturnDatas()
         {
             data = Infos();
@@ -99,7 +97,7 @@ namespace ProjectVersion2
         {
             data = Infos();
             List<string> studInfo = new List<string>();
-            studInfo.Add(student.name); studInfo.Add(student.surname); studInfo.Add(student.ID); studInfo.Add(groupName);  
+            studInfo.Add(student.name); studInfo.Add(student.surname); studInfo.Add(student.ID); studInfo.Add(groupName);
             data.Add(studInfo);
             WriteInCsv();
         }
@@ -108,9 +106,9 @@ namespace ProjectVersion2
         {
             data = Infos();
             List<string> studInfo = new List<string>();
-            foreach(List<string>profile in data)
+            foreach (List<string> profile in data)
             {
-                if(profile[3]== groupName)
+                if (profile[3] == groupName)
                 {
                     try
                     {
@@ -119,16 +117,16 @@ namespace ProjectVersion2
                     catch
                     {
                         profile.Add(teacher.name); profile.Add(teacher.surname);
-                    }                
+                    }
                 }
-            }           
+            }
             WriteInCsv();
         }
 
         public void DeleteStudentInWorkgroup(Student student) //this method delete the student from the CSV file
         {
             data = Infos();
-            foreach(List<string> studinfo in data)
+            foreach (List<string> studinfo in data)
             {
                 if (student.ID == studinfo[2])
                 {
@@ -142,11 +140,11 @@ namespace ProjectVersion2
         {
             data = Infos();
             bool found = false;
-            for(int i = 0; i < data.Count(); i++)
+            for (int i = 0; i < data.Count(); i++)
             {
                 if (data[i][2] == id)
                 {
-                    found = true;              
+                    found = true;
                 }
             }
             return found;
@@ -185,7 +183,7 @@ namespace ProjectVersion2
             {
                 for (int i = 0; i < list.Count; i++)
                 {
-                   
+
                     if (list[i][2] == firstName)
                     {
                         found = true;
@@ -211,7 +209,7 @@ namespace ProjectVersion2
             return -1; //return -1 if nothing is found.
         }
 
-        public int FindStudentInList(List<List<string>> list,Student student)
+        public int FindStudentInList(List<List<string>> list, Student student)
         {
             for (int i = 0; i < list.Count; i++)
             {
@@ -223,17 +221,17 @@ namespace ProjectVersion2
             return -1;
         }
 
-        public List<string> GetMarks(string id)//will return a list of string containing the name of the course + marks
+        public List<string> GetAttendance(string id)//will return a list of string containing the name of the course + marks
         {
             data = Infos();
             List<string> marks = new List<string>();
-            marks.Add(courseName+" : ");
+            marks.Add(courseName + " : ");
             int line = FindStudentInList(data);
-            if(line != -1)
+            if (line != -1)
             {
-                try //if the student has mark, there are added
+                try //if the student has attendance, there are added
                 {
-                    for (int i = 6; i < data[line].Count; i++) //if there are marks, they are displayed
+                    for (int i = 6; i < data[line].Count; i++) //if there are attendance, they are displayed
                     {
                         marks.Add(data[line][i]);
                     }
@@ -241,203 +239,80 @@ namespace ProjectVersion2
                 }
                 catch
                 {
-                    Console.WriteLine("the student has no mark in this course");
-                    return marks=null;
-                }               
+                    Console.WriteLine("the student has no attendance report in this course");
+                    return marks = null;
+                }
             }
             Console.WriteLine("the student is not in this course");
-            return marks=null;
+            return marks = null;
         }
 
-        //this methode is not the one used
-        public void ModifMarks() //this method will enable mark modification
+        //this methode is the one used
+        public void ModifAttendance() //this method will enable attendance modification
         {
             data = Infos(); //actualize with the data inside the csv file
             int line = FindStudentInList(data); //this function give the index of the researched student in the list.
             if (line != -1)
-            {               
+            {
                 string answer = "add";
-                while(answer != "exit") //it is the menu of the function
+                while (answer != "exit") //it is the menu of the function
                 {
-                    Console.Write("Marks of " + data[line][0] + " "+ data[line][1] + " : ");
+                    Console.Write("attendance report of " + data[line][0] + " " + data[line][1] + " : ");
                     bool markToModify = false; //will indicates if there is mark available
                     try
                     {
-                        for (int i = 6; i < data[line].Count; i++) //if there are marks, they are displayed
+                        for (int i = 6; i < data[line].Count; i++) //if there are reports, they are displayed
                         {
-                            Console.Write(data[line][i] + " ");
+                            Console.WriteLine(data[line][i] + " ");
                         }
                         markToModify = true;
                     }
                     catch
                     {
-                        Console.WriteLine("the student has no mark");
+                        Console.WriteLine("the student has no attendance report");
                     }
                     Console.WriteLine();
-                    Console.WriteLine("type: <<add>> to add a mark to the student. or type <<modify>> to modify a mark. Or type <<remove>> to remove a mark. type <<exit>> to leave");
+                    Console.WriteLine("type: <<add>> to add a report to the student. or type <<modify>> to modify a report. Or type <<remove>> to remove a report. type <<exit>> to leave");
                     answer = Console.ReadLine();
                     if (answer == "add")
                     {
                         string answer2 = "";
-                        Console.WriteLine("type the new mark to add");
-                        double mark=0;
+                        Console.WriteLine("type the new attendance report you want to add. Please mark the date and time");
                         bool correct = true;
                         answer2 = Console.ReadLine();
-                        try
+                        if (correct == true) //if the report is correct, the report is added
                         {
-                            mark = Convert.ToDouble(answer2); //the conversion needs to beverified
-                        }
-                        catch
-                        {
-                            Console.WriteLine("it is not a valid syntax");
-                            correct = false;
-                        }
-                        if (correct == true) //if the mark is correct, hthe mark is added
-                        {
-                            data[line].Add(Convert.ToString(mark));
-                            Console.WriteLine("the mark has been hadded");
+                            data[line].Add(answer2);
+                            Console.WriteLine("the attendance report has been hadded");
                             WriteInCsv();
                             data = Infos();
                         }
                         else
                         {
-                            Console.WriteLine("the mark has not been hadded");
-                        }            
+                            Console.WriteLine("the attendance report has not been hadded");
+                        }
                     }
 
                     if (answer == "modify")
                     {
-                        if (markToModify == true) //only applies if there is mark to modify
+                        if (markToModify == true) //only applies if there is a report to modify
                         {
                             string answer2 = "";
-                            Console.WriteLine("type the index of mark you want to modify. ex:1,2,3,...");                          
+                            Console.WriteLine("type the index of report you want to modify. ex:1,2,3,...");
                             answer2 = Console.ReadLine();
-                            Console.WriteLine("type the new mark");
+                            Console.WriteLine("type the new report");
                             string answer3 = Console.ReadLine();
                             int index = 0;
-                            double mark = 0;
                             try
                             {
-                                index=Convert.ToInt32(answer2); //try to convert the answers to verify if they are correct
-                                mark = Convert.ToDouble(answer3);
+                                index = Convert.ToInt32(answer2); //try to convert the answers to verify if they are correct                               
                                 data[line][index + 5] = answer3; //try to replace the data. this verify if the index given exist maks start at index 5 in csv
                                 WriteInCsv();
                                 data = Infos();
                             }
                             catch
                             {
-                                Console.WriteLine("the index or the new mark is not correct");
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("there is no mark to modify");
-                        }                     
-                    }
-
-                    if(answer == "remove")
-                    {
-                        if (markToModify == true)//only applies if there is mark to delete
-                        {
-                            string answer2 = "";
-                            Console.WriteLine("type the index of mark you want to remove. ex:1,2,3,...");
-                            answer2 = Console.ReadLine();
-                            int index = 0;
-                            try
-                            {
-                                index = Convert.ToInt32(answer2); //try to convert the answers to verify if they are correct 
-                                data[line].RemoveAt(5 + index);
-                                Console.WriteLine("Mark has been removed");
-                                WriteInCsv();
-                                data = Infos();
-                            }
-                            catch
-                            {
-                                Console.WriteLine("the index is not correct");
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("there is no mark to modify");
-                        }
-                    }
-                }                
-            }
-            WriteInCsv(); //save modifications in the csv
-        }
-
-        public void ModifMarks(Student student) //this method will enable mark modification
-        {
-            data = Infos(); //actualize with the data inside the csv file
-            int line = FindStudentInList(data,student); //this function give the index of the researched student in the list.
-            if (line != -1)
-            {
-                Console.WriteLine("Marks of : " + data[line][0] + data[line][1] + " : ");
-                bool markToModify = false; //will indicates if there is mark available
-                try
-                {
-                    for (int i = 6; i < data[line].Count; i++) //if there are marks, they are displayed
-                    {
-                        Console.Write(data[line][i] + " ");
-                    }
-                    markToModify = true;
-                }
-                catch
-                {
-                    Console.WriteLine("the student has no mark");
-                }
-                string answer = "";
-                while (answer != "add" || answer != "modify" || answer != "exit" || answer != "remove") //it is the menu of the function
-                {
-                    Console.WriteLine("type: <<add>> to add a mark to the student. or type <<modify>> to modify a mark. type <<exit>> to leave");
-                    answer = Console.ReadLine();
-                    if (answer == "add")
-                    {
-                        string answer2 = "";
-                        Console.WriteLine("type the new mark to add");
-                        double mark = 0;
-                        bool correct = true;
-                        answer2 = Console.ReadLine();
-                        try
-                        {
-                            mark = Convert.ToDouble(answer2); //the conversion needs to beverified
-                        }
-                        catch
-                        {
-                            Console.WriteLine("it is not a valid syntax");
-                            correct = false;
-                        }
-                        if (correct == true) //if the mark is correct, hthe mark is added
-                        {
-                            data[line].Add(Convert.ToString(mark));
-                            Console.WriteLine("the mark has been hadded");
-                        }
-                        else
-                        {
-                            Console.WriteLine("the mark has not been hadded");
-                        }
-                    }
-
-                    if (answer == "modify")
-                    {
-                        if (markToModify == true) //only applies if there is mark to modify
-                        {
-                            string answer2 = "";
-                            Console.WriteLine("type the index of mark you want to modify. ex:1,2,3,...");
-                            answer2 = Console.ReadLine();
-                            Console.WriteLine("type the new mark");
-                            string answer3 = Console.ReadLine();
-                            int index = 0;
-                            double mark = 0;
-                            try
-                            {
-                                index = Convert.ToInt32(answer2); //try to convert the answers to verify if they are correct
-                                mark = Convert.ToDouble(answer3);
-                                data[line][index + 5] = answer3; //try to replace the data. this verify if the index given exist maks start at index 5 in csv
-                            }
-                            catch
-                            {
-                                Console.WriteLine("the index or the new mark is not correct");
+                                Console.WriteLine("the index or the new report is not correct");
                             }
                         }
                         else
@@ -451,14 +326,16 @@ namespace ProjectVersion2
                         if (markToModify == true)//only applies if there is mark to delete
                         {
                             string answer2 = "";
-                            Console.WriteLine("type the index of mark you want to remove. ex:1,2,3,...");
+                            Console.WriteLine("type the index of the report you want to remove. ex:1,2,3,...");
                             answer2 = Console.ReadLine();
                             int index = 0;
                             try
                             {
                                 index = Convert.ToInt32(answer2); //try to convert the answers to verify if they are correct 
                                 data[line].RemoveAt(5 + index);
-                                Console.WriteLine("Mark has been removed");
+                                Console.WriteLine("the report has been removed");
+                                WriteInCsv();
+                                data = Infos();
                             }
                             catch
                             {
@@ -467,23 +344,127 @@ namespace ProjectVersion2
                         }
                         else
                         {
+                            Console.WriteLine("there is no attendance report to modify");
+                        }
+                    }
+                }
+            }
+            Console.WriteLine();
+            WriteInCsv(); //save modifications in the csv
+        }
+
+        public void ModifAttendance(Student student) //this method will enable attendance modification
+        {
+            data = Infos(); //actualize with the data inside the csv file
+            int line = FindStudentInList(data,student); //this function give the index of the researched student in the list.
+            if (line != -1)
+            {
+                string answer = "add";
+                while (answer != "exit") //it is the menu of the function
+                {
+                    Console.Write("attendance report of " + data[line][0] + data[line][1] + " : ");
+                    bool markToModify = false; //will indicates if there is mark available
+                    try
+                    {
+                        for (int i = 6; i < data[line].Count; i++) //if there are marks, they are displayed
+                        {
+                            Console.WriteLine(data[line][i] + " ");
+                        }
+                        markToModify = true;
+                    }
+                    catch
+                    {
+                        Console.WriteLine("the student has no attendance report");
+                    }
+                    Console.WriteLine();
+                    Console.WriteLine("type: <<add>> to add a report to the student. or type <<modify>> to modify a report. Or type <<remove>> to remove a report. type <<exit>> to leave");
+                    answer = Console.ReadLine();
+                    if (answer == "add")
+                    {
+                        string answer2 = "";
+                        Console.WriteLine("type the new attendance report you want to add. Please mark the date and time");
+                        //double mark = 0;
+                        bool correct = true;
+                        answer2 = Console.ReadLine();
+                        //try
+                        //{
+                        //    mark = Convert.ToDouble(answer2); //the conversion needs to beverified
+                        //}
+                        //catch
+                        //{
+                        //    Console.WriteLine("it is not a valid syntax");
+                        //    correct = false;
+                        //}
+                        if (correct == true) //if the mark is correct, hthe mark is added
+                        {
+                            data[line].Add(answer2);
+                            Console.WriteLine("the attendance report has been hadded");
+                            WriteInCsv();
+                            data = Infos();
+                        }
+                        else
+                        {
+                            Console.WriteLine("the attendance report has not been hadded");
+                        }
+                    }
+
+                    if (answer == "modify")
+                    {
+                        if (markToModify == true) //only applies if there is a report to modify
+                        {
+                            string answer2 = "";
+                            Console.WriteLine("type the index of report you want to modify. ex:1,2,3,...");
+                            answer2 = Console.ReadLine();
+                            Console.WriteLine("type the new report");
+                            string answer3 = Console.ReadLine();
+                            int index = 0;
+                            try
+                            {
+                                index = Convert.ToInt32(answer2); //try to convert the answers to verify if they are correct                               
+                                data[line][index + 5] = answer3; //try to replace the data. this verify if the index given exist maks start at index 5 in csv
+                                WriteInCsv();
+                                data = Infos();
+                            }
+                            catch
+                            {
+                                Console.WriteLine("the index or the new report is not correct");
+                            }
+                        }
+                        else
+                        {
                             Console.WriteLine("there is no mark to modify");
+                        }
+                    }
+
+                    if (answer == "remove")
+                    {
+                        if (markToModify == true)//only applies if there is mark to delete
+                        {
+                            string answer2 = "";
+                            Console.WriteLine("type the index of the report you want to remove. ex:1,2,3,...");
+                            answer2 = Console.ReadLine();
+                            int index = 0;
+                            try
+                            {
+                                index = Convert.ToInt32(answer2); //try to convert the answers to verify if they are correct 
+                                data[line].RemoveAt(5 + index);
+                                Console.WriteLine("the report has been removed");
+                                WriteInCsv();
+                                data = Infos();
+                            }
+                            catch
+                            {
+                                Console.WriteLine("the index is not correct");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("there is no attendance report to modify");
                         }
                     }
                 }
             }
             WriteInCsv(); //save modifications in the csv
         }
-
-
-
-
-
     }
-
-
-
 }
-
-
-

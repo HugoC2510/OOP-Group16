@@ -10,18 +10,20 @@ namespace ProjectVersion2
     {
         public YearGrade year;
         public List<WorkGroup> group;
-        public List<Course> courseList;
+        public List<string> courseList;
         public string program;
-        public List<List<double>> marks; //each course will get its ist of marks
+        public List<List<string>> marks; //each course will get its ist of marks
         public int fees=0;
         public int paymentMode;
         private static int due_fees;
-        public Student(string _name, string _surname,int _age,char _sex,string _email, string _phoneNumber, string _ID, string password)
+        public Student(string _name, string _surname,int _age,string _sex,string _email, string _phoneNumber, string _ID, string password)
             : base(_ID, _name, _surname, _age, _sex, _email, _phoneNumber,password)
 
         {
             this.status = "Student";
             due_fees = 8000;
+            this.group = new List<WorkGroup>();
+            this.courseList = new List<string>();
         }
 
         //public bool CompareMarks(Student stud) 
@@ -43,43 +45,43 @@ namespace ProjectVersion2
         //    return same;
         //}
 
-        public bool CompareCourse(Student stud)  //this compare if the students follow the same courses. this method is not used for now
-        {
-            bool result = true;
-            if (stud.courseList.Count == courseList.Count)
-            {
-                int nbCourseFound = 0;
-                foreach (Course course in courseList)
-                {
-                    for(int i = 0; i < stud.courseList.Count; i++)
-                    {
-                        if (course.name == stud.courseList[i].name)
-                        {
-                            nbCourseFound ++;
-                        }
-                    }
-                }
-                if (nbCourseFound != courseList.Count)
-                {
-                    result = false;
-                }
-            }
-            else
-            {
-                result = false;
-            }
-            return result;
-        }
+        //public bool CompareCourse(Student stud)  //this compare if the students follow the same courses. this method is not used for now
+        //{
+        //    bool result = true;
+        //    if (stud.courseList.Count == courseList.Count)
+        //    {
+        //        int nbCourseFound = 0;
+        //        foreach (Course course in courseList)
+        //        {
+        //            for(int i = 0; i < stud.courseList.Count; i++)
+        //            {
+        //                if (course.name == stud.courseList[i].name)
+        //                {
+        //                    nbCourseFound ++;
+        //                }
+        //            }
+        //        }
+        //        if (nbCourseFound != courseList.Count)
+        //        {
+        //            result = false;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        result = false;
+        //    }
+        //    return result;
+        //}
 
-        public bool EqualStudent(Student obj) //need to add comparion List workgroup equal
-        {
-            bool same = true;
-            if (EqualPerson(obj as Person)!= true || obj.year!=year || obj.program!= program || obj.fees!=fees || obj.paymentMode!=paymentMode || CompareCourse(obj)!=true)
-            {
-                same = false;
-            }
-            return same;
-        }
+        //public bool EqualStudent(Student obj) //need to add comparion List workgroup equal
+        //{
+        //    bool same = true;
+        //    if (EqualPerson(obj as Person)!= true || obj.year!=year || obj.program!= program || obj.fees!=fees || obj.paymentMode!=paymentMode || CompareCourse(obj)!=true)
+        //    {
+        //        same = false;
+        //    }
+        //    return same;
+        //}
         public override void Tostring() //we show on the console a description of the object
         {
             Console.WriteLine("Name : " + name

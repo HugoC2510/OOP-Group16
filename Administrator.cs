@@ -10,7 +10,7 @@ namespace ProjectVersion2
     {
         public YearGrade year;
         public string password;
-        public Administrator(string _ID, string _name, string _surname, int _age, char _sex, string _email, string _phoneNumber,string _password)
+        public Administrator(string _ID, string _name, string _surname, int _age, string _sex, string _email, string _phoneNumber,string _password)
             :base(_ID, _name,_surname, _age, _sex, _email, _phoneNumber, _password)
         {
             this.status = "Administrator";

@@ -14,6 +14,8 @@ namespace ProjectVersion2
         public WorkGroup(string name)
         {
             this.name = name;
+            members = new List<Student>();
+            this.professor = null;
         }
         public WorkGroup(List<Student> _members, string _name)
         {

@@ -12,13 +12,13 @@ namespace ProjectVersion2
         public string name;
         public string surname;
         public int age;
-        public char sex;
+        public string sex;
         public string email;
         public string phoneNumber;
         public string status;
         public string password;
 
-        public Person(string _ID,string _name, string _surname, int _age, char _sex, string _email, string _phoneNumber, string _password)
+        public Person(string _ID,string _name, string _surname, int _age, string _sex, string _email, string _phoneNumber, string _password)
         {
             this.ID = _ID;
             this.name = _name;

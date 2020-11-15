@@ -9,12 +9,11 @@ namespace ProjectVersion2
     public class Teacher : Person
     {
         public List<WorkGroup> groups;
-        public string password;
         
-        public Teacher(string _ID, string _name, string _surname, int _age, char _sex, string _email, string _phoneNumber, string _password)
-            :base( _ID, _name,_surname, _age,  _sex, _email,  _phoneNumber, _phoneNumber)
+        public Teacher(string _ID, string _name, string _surname, int _age, string _sex, string _email, string _phoneNumber, string _password)
+            :base( _ID, _name,_surname, _age,  _sex, _email,  _phoneNumber, _password)
         {
-            this.status = "Teacher";
+            this.status = "Professor";
         }
         public override void Tostring() //we show on the console a description of the object
         {

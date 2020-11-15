@@ -46,20 +46,7 @@ namespace ProjectVersion2
                 Console.WriteLine(" ");
             }
         }
-        //public List<string[]> CopyFile(List<string[]> origin)
-        //{
-        //    List<string[]> newFile = new List<string[]>();
-        //    for(int i=0;i<origin.Count;i++)
-        //    {
-        //        string[] tab = new string[origin.ElementAt(i).Length];
-        //        for(int j=0;j<origin.ElementAt(i).Length;j++)
-        //        {
-        //            tab[i] = origin.ElementAt(i).ElementAt(j);
-        //        }
-        //        newFile.Add(tab);
-        //    }
-        //    return newFile;
-        //}
+ 
         public void ShowInformation()//this method shows all information of one person in the database
         {
             data = Infos();
@@ -290,56 +277,39 @@ namespace ProjectVersion2
             }
             file.Close();
         }
-        public List<Student> StudentGroup()
+
+        public List<Person> AllPeople()
         {
-            List<List<string>> data = this.Infos();
-            List<Student> answer = new List<Student>();
-            foreach(List<string> l in data)
-            {
-                if (l.ElementAt(3).ToUpper() == "STUDENT") 
-                {
-                    string name = l.ElementAt(0);
-                    string surname = l.ElementAt(1);
-                    string mail = l.ElementAt(2);
-                    string id = l.ElementAt(4);
-                    string password = l.ElementAt(5);
-                    char sex = Convert.ToChar(l.ElementAt(6));
-                    int age = Convert.ToInt32(l.ElementAt(7));
-                    string phone = l.ElementAt(8);
-                    Student test = new Student(name, surname, age, sex, mail, phone, id,password);
-                    answer.Add(test);
-                }
-            }
-            return answer;
-        }
-        public List<Teacher> TeacherGroup()
-        {
-            List<List<string>> data = this.Infos();
-            List<Teacher> answer = new List<Teacher>();
+            data = Infos();
+            List<Person> allPeople = new List<Person>();
             foreach (List<string> l in data)
             {
-                if (l.ElementAt(3).ToUpper() == "TEACHER")
+                if (l.ElementAt(3).ToUpper() == "STUDENT")
                 {
                     string name = l.ElementAt(0);
                     string surname = l.ElementAt(1);
                     string mail = l.ElementAt(2);
                     string id = l.ElementAt(4);
                     string password = l.ElementAt(5);
-                    char sex = Convert.ToChar(l.ElementAt(6));
+                    string sex = l.ElementAt(6);
+                    int age = Convert.ToInt32(l.ElementAt(7));
+                    string phone = l.ElementAt(8);
+                    Student test = new Student(name, surname, age, sex, mail, phone, id, password);
+                    allPeople.Add(test);
+                }
+                if (l.ElementAt(3).ToUpper() == "PROFESSOR")
+                {
+                    string name = l.ElementAt(0);
+                    string surname = l.ElementAt(1);
+                    string mail = l.ElementAt(2);
+                    string id = l.ElementAt(4);
+                    string password = l.ElementAt(5);
+                    string sex = l.ElementAt(6);
                     int age = Convert.ToInt32(l.ElementAt(7));
                     string phone = l.ElementAt(8);
                     Teacher test = new Teacher(id, name, surname, age, sex, mail, phone, password);
-                    answer.Add(test);
+                    allPeople.Add(test);
                 }
-            }
-            return answer;
-        }
-        public List<Administrator> AdminGroup()
-        {
-            List<List<string>> data = this.Infos();
-            List<Administrator> answer = new List<Administrator>();
-            foreach (List<string> l in data)
-            {
                 if (l.ElementAt(3).ToUpper() == "ADMINISTRATOR")
                 {
                     string name = l.ElementAt(0);
@@ -347,15 +317,84 @@ namespace ProjectVersion2
                     string mail = l.ElementAt(2);
                     string id = l.ElementAt(4);
                     string password = l.ElementAt(5);
-                    char sex = Convert.ToChar(l.ElementAt(6));
+                    string sex = l.ElementAt(6);
                     int age = Convert.ToInt32(l.ElementAt(7));
                     string phone = l.ElementAt(8);
                     Administrator test = new Administrator(id, name, surname, age, sex, mail, phone, password);
-                    answer.Add(test);
+                    allPeople.Add(test);
                 }
             }
-            return answer;
+            return allPeople;
         }
+
+ 
+
+        //public List<Student> StudentGroup()
+        //{
+        //    List<List<string>> data = this.Infos();
+        //    List<Student> answer = new List<Student>();
+        //    foreach(List<string> l in data)
+        //    {
+        //        if (l.ElementAt(3).ToUpper() == "STUDENT") 
+        //        {
+        //            string name = l.ElementAt(0);
+        //            string surname = l.ElementAt(1);
+        //            string mail = l.ElementAt(2);
+        //            string id = l.ElementAt(4);
+        //            string password = l.ElementAt(5);
+        //            char sex = Convert.ToChar(l.ElementAt(6));
+        //            int age = Convert.ToInt32(l.ElementAt(7));
+        //            string phone = l.ElementAt(8);
+        //            Student test = new Student(name, surname, age, sex, mail, phone, id,password);
+        //            answer.Add(test);
+        //        }
+        //    }
+        //    return answer;
+        //}
+        //public List<Teacher> TeacherGroup()
+        //{
+        //    List<List<string>> data = this.Infos();
+        //    List<Teacher> answer = new List<Teacher>();
+        //    foreach (List<string> l in data)
+        //    {
+        //        if (l.ElementAt(3).ToUpper() == "TEACHER")
+        //        {
+        //            string name = l.ElementAt(0);
+        //            string surname = l.ElementAt(1);
+        //            string mail = l.ElementAt(2);
+        //            string id = l.ElementAt(4);
+        //            string password = l.ElementAt(5);
+        //            char sex = Convert.ToChar(l.ElementAt(6));
+        //            int age = Convert.ToInt32(l.ElementAt(7));
+        //            string phone = l.ElementAt(8);
+        //            Teacher test = new Teacher(id, name, surname, age, sex, mail, phone, password);
+        //            answer.Add(test);
+        //        }
+        //    }
+        //    return answer;
+        //}
+        //public List<Administrator> AdminGroup()
+        //{
+        //    List<List<string>> data = this.Infos();
+        //    List<Administrator> answer = new List<Administrator>();
+        //    foreach (List<string> l in data)
+        //    {
+        //        if (l.ElementAt(3).ToUpper() == "ADMINISTRATOR")
+        //        {
+        //            string name = l.ElementAt(0);
+        //            string surname = l.ElementAt(1);
+        //            string mail = l.ElementAt(2);
+        //            string id = l.ElementAt(4);
+        //            string password = l.ElementAt(5);
+        //            char sex = Convert.ToChar(l.ElementAt(6));
+        //            int age = Convert.ToInt32(l.ElementAt(7));
+        //            string phone = l.ElementAt(8);
+        //            Administrator test = new Administrator(id, name, surname, age, sex, mail, phone, password);
+        //            answer.Add(test);
+        //        }
+        //    }
+        //    return answer;
+        //}
 
     }
 }
