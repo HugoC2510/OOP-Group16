@@ -1,0 +1,10 @@
+Build Note 11/15
+Lot of changes!
+-the attendance class has been created. we can now point out our missing students!
+-All things that are made inside of a course, like creating a workgroup and adding students are now saved with all students data. the informations are permanent!
+-now we can fully rebuild class from its file: attendance.csv and marks.csv
+
+what for next week:
+-as we can rebuilt an entire course with its files, we are going to create a programme that can generated every course that has been created
+so far with help of its files. this will alow us to manage all the course we want and their students inside  inside our school!
+-if possible, creation of the final interface.
