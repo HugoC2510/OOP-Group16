@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OOP_Project_Team13
+namespace ProjectVersion2
 {
     interface IDatabase
     {
         void ModifyFile();
-        void RemoveInformation(string name);
+        void RemoveInformation();
         void ShowFile();
         void AddInformation();
+        void WriteInCsv();
     }
 }
