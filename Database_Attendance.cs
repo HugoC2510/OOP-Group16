@@ -183,14 +183,12 @@ namespace ProjectVersion2
             {
                 for (int i = 0; i < list.Count; i++)
                 {
-
                     if (list[i][2] == firstName)
                     {
                         found = true;
                         return i;
                     }
                 }
-
             }
             else
             {

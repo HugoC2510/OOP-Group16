@@ -22,13 +22,13 @@ namespace ProjectVersion2
         public override void Tostring() //we show on the console a description of the object
         {
             Console.WriteLine("Name : " + name
-                + "; Surname : " + surname
-                + "; Age : " + age
-                + "; Sex : " + sex
-                + "; Email : " + email
-                + "; Phone Number : " +phoneNumber
-                + "; ID : "+ID
-                + "; Status : " +status);
+                + "\n Surname : " + surname
+                + "\n Age : " + age
+                + "\n Sex : " + sex
+                + "\n Email : " + email
+                + "\n Phone Number : " + phoneNumber
+                + "\n ID : " + ID
+                + "\n Status : " + status);
             Console.WriteLine();
             Console.WriteLine("you are registered as a teacher in the following courses: ");
             foreach(Course course in courses)
