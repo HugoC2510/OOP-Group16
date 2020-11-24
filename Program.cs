@@ -219,13 +219,14 @@ namespace ProjectVersion2
             return null;
         }
 
-        public static void UpdateEveryPersonStatus(List<Person> all, List<Course> courseList, Database_Login database, Database_CourseList dataCourseList)
+        public static void UpdateEveryPersonStatus(List<Person> all, List<Course> courseList, Database_Login database, Database_CourseList dataCourseList, Database_Fees database_Fees)
         {
             foreach(Person person in all)
             {
                 if (person is Student)
                 {
                     Student stud = person as Student;
+                    stud.feeStatus=database_Fees.ReturnFeesInfos(stud.ID);
                     foreach (Course course in courseList)
                     {
                         if (course.StudentPresentInCourse(stud) == true)
@@ -269,14 +270,15 @@ namespace ProjectVersion2
                     admin.allcourses = courseList;
                     admin.allpersons = all;
                     admin.database_CourseList = dataCourseList;
+                    admin.database_Fees = database_Fees;
                 }
             }
         }
-        public static void Application(Database_Login database_Login, Database_CourseList database_CourseList)
+        public static void Application(Database_Login database_Login, Database_CourseList database_CourseList, Database_Fees database_Fees)
         {
             List<Person> all = database_Login.AllPeople();
             List<Course> courses = database_CourseList.courseListe;
-            UpdateEveryPersonStatus(all, courses, database_Login, database_CourseList);
+            UpdateEveryPersonStatus(all, courses, database_Login, database_CourseList, database_Fees);
             bool connexion = false;
             while (connexion == false)
             {
@@ -302,6 +304,7 @@ namespace ProjectVersion2
                                 Console.WriteLine("1) To view your personal information.");
                                 Console.WriteLine("2) To view your marks.");
                                 Console.WriteLine("3) To view your Attendance report.");
+                                Console.WriteLine("4) To view your finance.");
                                 Console.WriteLine("type exit to leave");
                                 Console.WriteLine();
                                 answerstud=Console.ReadLine();
@@ -318,6 +321,9 @@ namespace ProjectVersion2
                                     case "3":
                                         student.DisplayAllAttendanceReport();
                                         Console.WriteLine();
+                                        break;
+                                    case "4":
+                                        student.DisplayFeeStatues();
                                         break;
                                     case "exit":
                                         Console.WriteLine();
@@ -390,6 +396,7 @@ namespace ProjectVersion2
                                 Console.WriteLine("11) To remove a student from a course.");
                                 Console.WriteLine("12) To change the teacher in charge of a workgroup in a course.");
                                 Console.WriteLine("13) To view all courses datas.");
+                                Console.WriteLine("14) To manage the finance status of a student.");
                                 Console.WriteLine("type exit to leave");
                                 Console.WriteLine();
                                 answerperson = Console.ReadLine();
@@ -447,6 +454,9 @@ namespace ProjectVersion2
                                         admin.ViewCourseInfos();
                                         Console.WriteLine();
                                         break;
+                                    case "14":
+                                        admin.database_Fees.ModifyDatas();
+                                        break;
                                     case "exit":
                                         Console.WriteLine();
                                         break;
@@ -460,15 +470,20 @@ namespace ProjectVersion2
                         }
                     }
                 }
-            }
-           
+            }        
         }
+
         static void Main(string[] args) 
         {
             Database_Login database_Login = new Database_Login("DataFileLogIn1.csv");
             Database_CourseList database_CourseList = new Database_CourseList("Database_CourseList.csv");
+            Database_Fees database_Fees = new Database_Fees();
             Console.WriteLine("files generated");
-            Application(database_Login, database_CourseList);
+            Application(database_Login, database_CourseList, database_Fees);
+
+            //Database_Fees database_Fees = new Database_Fees(database_Login.AllPeople());
+            //database_Fees.ModifyDatas();
+            
             //List<Person> all = new List<Person>();
             //all = database_Login.AllPeople();
             //List<Course> courses = new List<Course>();
