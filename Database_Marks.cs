@@ -7,7 +7,7 @@ using System.IO;
 
 namespace ProjectVersion2
 {
-    public class Database_Marks//:IDatabase  // mandatory template for this file: firstname, surname, id, worgroupName, professor name, professor surname and then marks
+    public class Database_Marks  // mandatory template for this file: firstname, surname, id, worgroupName, professor name, professor surname and then marks
     {
         public string filepath; //file path
         List<List<string>> data; //all data related to the file

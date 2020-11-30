@@ -7,7 +7,7 @@ using System.IO;
 
 namespace ProjectVersion2
 {
-    public class Database_Attendance//:IDatabase  // mandatory template for this file: firstname, surname, id, worgroupName, professor name, professor surname and then all string about attendance
+    public class Database_Attendance// mandatory template for this file: firstname, surname, id, worgroupName, professor name, professor surname and then all string about attendance
     {
         public string filepath; //file path
         List<List<string>> data; //all data related to the file
@@ -183,14 +183,12 @@ namespace ProjectVersion2
             {
                 for (int i = 0; i < list.Count; i++)
                 {
-
                     if (list[i][2] == firstName)
                     {
                         found = true;
                         return i;
                     }
                 }
-
             }
             else
             {

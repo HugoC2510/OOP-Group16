@@ -7,7 +7,7 @@ using System.IO;
 
 namespace ProjectVersion2
 {
-    public class Database_Login : IDatabase  //this class and its file is very important as every person's account is saved there.
+    public class Database_Login   //this class and its file is very important as every person's account is saved there.
     {                                        //finished on 4/11
         private string filepath;
         List<List<string>> data;

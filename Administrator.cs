@@ -12,6 +12,7 @@ namespace ProjectVersion2
         public List<Person> allpersons;
         public Database_Login database_Login;
         public Database_CourseList database_CourseList;
+        public Database_Fees database_Fees;
 
         public Administrator(string _ID, string _name, string _surname, int _age, string _sex, string _email, string _phoneNumber,string _password)
             :base(_ID, _name,_surname, _age, _sex, _email, _phoneNumber, _password)
@@ -21,18 +22,20 @@ namespace ProjectVersion2
             this.allpersons = new List<Person>();
             this.database_Login = null;
             this.database_CourseList = null;
+            this.database_Fees = null;
         }
 
         public override void Tostring() //we show on the console a description of the object
         {
             Console.WriteLine("Name : " + name
-                + "; Surname : " + surname
-                + "; Age : " + age
-                + "; Sex : " + sex
-                + "; Email : " + email
-                + "; Phone Number : " + phoneNumber
-                + "; ID : " + ID
-                + "; Status : " + status);
+                + "\n Surname : " + surname
+                + "\n Age : " + age
+                + "\n Sex : " + sex
+                + "\n Email : " + email
+                + "\n Phone Number : " + phoneNumber
+                + "\n ID : " + ID
+                + "\n Status : " + status);
+            Console.WriteLine();
         }
 
         public void ModifySomeonesMarks()
@@ -151,55 +154,67 @@ namespace ProjectVersion2
             {
                 Console.WriteLine("type the name of the course you want to create. Type <<exit>> to cancel");
                 answer = Console.ReadLine();
-                Console.WriteLine("type the year grade of the students in it : A1, A2, A3, A4, A5, Phd. Type <<exit>> to cancel");
-                answer2 = Console.ReadLine();
-                if (answer != "exit")
+                bool courseExist = false;
+                foreach(Course cours in this.allcourses)
                 {
-                    switch (answer2)
+                    if (cours.name == answer)
                     {
-                        case "A1":
-                            Course course = new Course(answer, answer2);
-                            courseCreated = true;
-                            database_CourseList.AddACourse(course);
-                            Console.WriteLine("Course created");
-                            break;
-                        case "A2":
-                            Course course2 = new Course(answer, answer2);
-                            courseCreated = true;
-                            database_CourseList.AddACourse(course2);
-                            Console.WriteLine("Course created");
-                            break;
-                        case "A3":
-                            Course course3 = new Course(answer, answer2);
-                            courseCreated = true;
-                            database_CourseList.AddACourse(course3);
-                            Console.WriteLine("Course created");
-                            break;
-                        case "A4":
-                            Course course4 = new Course(answer, answer2);
-                            courseCreated = true;
-                            database_CourseList.AddACourse(course4);
-                            Console.WriteLine("Course created");
-                            break;
-                        case "A5":
-                            Course course5 = new Course(answer, answer2);
-                            courseCreated = true;
-                            database_CourseList.AddACourse(course5);
-                            Console.WriteLine("Course created");
-                            break;
-                        case "Phd":
-                            Course course6 = new Course(answer, answer2);
-                            courseCreated = true;
-                            database_CourseList.AddACourse(course6);
-                            Console.WriteLine("Course created");
-                            break;
-                        case "exit":
-                            break;
-                        default:
-                            Console.WriteLine("no valid syntax");
-                            break;
+                        Console.WriteLine("A course with the same name already exist. Try another name.");
+                        courseExist = true;
                     }
-                }               
+                }
+                if (courseExist == false && answer!="exit")
+                {
+                    Console.WriteLine("type the year grade of the students in it : A1, A2, A3, A4, A5, Phd. Type <<exit>> to cancel");
+                    answer2 = Console.ReadLine();
+                    if (answer != "exit")
+                    {
+                        switch (answer2)
+                        {
+                            case "A1":
+                                Course course = new Course(answer, answer2);
+                                courseCreated = true;
+                                database_CourseList.AddACourse(course);
+                                Console.WriteLine("Course created");
+                                break;
+                            case "A2":
+                                Course course2 = new Course(answer, answer2);
+                                courseCreated = true;
+                                database_CourseList.AddACourse(course2);
+                                Console.WriteLine("Course created");
+                                break;
+                            case "A3":
+                                Course course3 = new Course(answer, answer2);
+                                courseCreated = true;
+                                database_CourseList.AddACourse(course3);
+                                Console.WriteLine("Course created");
+                                break;
+                            case "A4":
+                                Course course4 = new Course(answer, answer2);
+                                courseCreated = true;
+                                database_CourseList.AddACourse(course4);
+                                Console.WriteLine("Course created");
+                                break;
+                            case "A5":
+                                Course course5 = new Course(answer, answer2);
+                                courseCreated = true;
+                                database_CourseList.AddACourse(course5);
+                                Console.WriteLine("Course created");
+                                break;
+                            case "Phd":
+                                Course course6 = new Course(answer, answer2);
+                                courseCreated = true;
+                                database_CourseList.AddACourse(course6);
+                                Console.WriteLine("Course created");
+                                break;
+                            case "exit":
+                                break;
+                            default:
+                                Console.WriteLine("no valid syntax");
+                                break;
+                        }
+                    }
+                }                          
             }           
         }
 
