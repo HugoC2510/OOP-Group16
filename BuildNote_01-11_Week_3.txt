@@ -1,0 +1,8 @@
+Build Note 01/11
+all files are available under week 3 deposit
+What's new?
+-Database about log information completed and coded
+-Programs to use,exploit and save .csv file done and ready to be applied to all other datafile classes
+-first exemple and code verification donne with a database of 50 names generated to emulate students informations 
+
+For Weeek 4: creation of the remaining classes and datafile such marks, attendance, courses, etc...
