@@ -1,0 +1,6 @@
+Build Note 30/11
+all files are available under week 7 deposit
+what's new?
+-bug fixed
+-some improvement in the code in order to make it cleaner and easier to read
+-small improvement of the user's interface
