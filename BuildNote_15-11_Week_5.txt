@@ -1,5 +1,6 @@
 Build Note 11/15
-Lot of changes!
+all files are available under week 5 deposit
+what's new? Lot of changes!
 -the attendance class has been created. we can now point out our missing students!
 -All things that are made inside of a course, like creating a workgroup and adding students are now saved with all students data. the informations are permanent!
 -now we can fully rebuild class from its file: attendance.csv and marks.csv
