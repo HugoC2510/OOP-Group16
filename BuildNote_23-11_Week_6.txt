@@ -1,0 +1,6 @@
+Build Note 23/11
+all files are available under week 6 deposit
+what's new?
+-The alpha is now finished, we added the management of the scolarity fees
+-Fixed some bugs in the course class: it is now impossible to create  courses with the same name.
+-We have changed the interface of the menu and for some functions in order to make it more friendly and easier to understand.
