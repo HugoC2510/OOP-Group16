@@ -1,5 +1,0 @@
-Build Note 11/8
-all files are available under week 4 deposit
-what's new?
-many new classes were created. our program is now able to permanently save the marks of our students for every courses.
-same possibilitu with attendance coming soon
