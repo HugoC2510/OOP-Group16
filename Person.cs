@@ -31,7 +31,6 @@ namespace ProjectVersion2
         }
         public abstract void Tostring();
         public abstract bool ConnectionCheck();
-
         public bool EqualPerson(Person obj) //this method enalbe comparison between two people. they are equals if their informations are the same.
         {
             bool same = true;

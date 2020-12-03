@@ -46,6 +46,188 @@ namespace ProjectVersion2
                 Console.WriteLine(" ");
             }
         }
+        public  void ShowSortedFile()//the admin makes his choice and the function returns the database sorted as wanted
+        {
+            Console.WriteLine("How do you want your database sorted ? ");
+            Console.WriteLine("Select your choice : ");
+            Console.WriteLine("1) by name");
+            Console.WriteLine("2) by surname");
+            Console.WriteLine("3) by email");
+            Console.WriteLine("4) by id");
+            Console.WriteLine("5) by age");
+            Console.WriteLine("6) if you want to see all the people of one gender");
+            Console.WriteLine("7) if you want to see all the people of one status");
+            Console.WriteLine("8) by last added");
+            string answer = Console.ReadLine().ToUpper();
+            switch (answer)
+            {
+                case "1":
+                    List<Person>res=SortFile("1");
+                    ShowAllPerson(res);
+                    break;
+                case "2":
+                    List<Person> res2 = SortFile("2");
+                    ShowAllPerson(res2);
+                    break;
+                case "3":
+                    List<Person> res3 = SortFile("3");
+                    ShowAllPerson(res3);
+                    break;
+                case "4":
+                    List<Person> res4 = SortFile("4");
+                    ShowAllPerson(res4);
+                    break;
+                case "5":
+                    List<Person> res5 = SortFile("5");
+                    ShowAllPerson(res5);
+                    break;
+                case "6":
+                    List<Person> res6 = SortFile("6");
+                    ShowAllPerson(res6);
+                    break;
+                case "7":
+                    List<Person> res7 = SortFile("7");
+                    ShowAllPerson(res7);
+                    break;
+                case "8":
+                    List<Person> res8 = SortFile("8");
+                    ShowAllPerson(res8);
+                    break;
+            }
+
+        }
+        public List<Person> EnumToList(IEnumerable<Person> enu)
+        {
+            List<Person> res = new List<Person>();
+            foreach(Person p in enu)
+            {
+                res.Add(p);
+            }
+            return res;
+        }
+
+        public List<Person> SortFile(string choice)//sort the persons depending on the choice of the admin
+        {
+            int column = Convert.ToInt32(choice)-1;
+            List<Person> all = AllPeople();
+            List<Person> partial = new List<Person>();
+            if(column==0)
+            {
+                
+                IEnumerable<Person> res0=all.OrderBy(x => x.name);
+                partial = EnumToList(res0);
+                return partial;
+            }
+            if (column == 1)
+            {
+                IEnumerable<Person> res0 = all.OrderBy(x => x.surname);
+                partial = EnumToList(res0);
+                return partial;
+            }
+            if (column == 2)
+            {
+                IEnumerable<Person> res0 = all.OrderBy(x => x.email);
+                partial = EnumToList(res0);
+                return partial;
+            }
+            if(column==3)
+            {
+                IEnumerable<Person> res0 = all.OrderBy(x => x.ID);
+                partial = EnumToList(res0);
+                return partial;
+            }
+            if(column==4)
+            {
+                IEnumerable<Person> res0 = all.OrderBy(x => x.age);
+                partial = EnumToList(res0);
+                return partial;
+            }
+            if(column==5)
+            {
+                Console.WriteLine("You want to see the members of what gender ? (Select M or F)");
+                string answer = Console.ReadLine().ToUpper();
+                while(answer!="M" && answer!="F")
+                {
+                    Console.WriteLine("Select a correct answer please : ");
+                    answer = Console.ReadLine();
+                }
+                if(answer=="M")
+                {
+                    foreach(Person p in all)
+                    {
+                        if(p.sex=="male")
+                        {
+                            partial.Add(p);
+                        }
+                    }
+                }
+                if (answer == "F")
+                {
+                    foreach (Person p in all)
+                    {
+                        if (p.sex == "female")
+                        {
+                            partial.Add(p);
+                        }
+                    }
+                }
+                return partial;
+            }
+            if(column==7)
+            {
+                return all;
+            }
+            else
+            {
+                Console.WriteLine("You want to see the members of what status ? (Select ADMINISTRATOR, PROFESSOR or STUDENT)");
+                string answer = Console.ReadLine().ToUpper();
+                while (answer != "ADMINISTRATOR" && answer != "PROFESSOR" && answer!="STUDENT")
+                {
+                    Console.WriteLine("Select a correct answer please : ");
+                    answer = Console.ReadLine().ToUpper();
+                }
+                if (answer == "ADMINISTRATOR")
+                {
+                    foreach (Person p in all)
+                    {
+                        if (p.status.ToUpper() == "ADMINISTRATOR")
+                        {
+                            partial.Add(p);
+                        }
+                    }
+                }
+                if (answer == "STUDENT")
+                {
+                    foreach (Person p in all)
+                    {
+                        if (p.status.ToUpper() == "STUDENT")
+                        {
+                            partial.Add(p);
+                        }
+                    }
+                }
+                if (answer == "PROFESSOR")
+                {
+                    foreach (Person p in all)
+                    {
+                        if (p.status.ToUpper() == "PROFESSOR")
+                        {
+                            partial.Add(p);
+                        }
+                    }
+                }
+                return partial;
+
+            }
+        }
+        public void ShowAllPerson(List<Person> pers)//give a quick description of each person in the database
+        {
+            foreach(Person p in pers)
+            {
+                Console.WriteLine("Name : " + p.name + "; Surname : " + p.surname + "; ID : " + p.ID + "; Age : " + p.age + "; Status : " + p.status
+                    + "; Gender : " + p.sex+"; Mail :" +p.email);
+            }
+        }
  
         public void ShowInformation()//this method shows all information of one person in the database
         {
@@ -328,8 +510,44 @@ namespace ProjectVersion2
             }
             return allPeople;
         }
+        public void ChangePassword(string id)//ables the user to change his password
+        {
+            //Console.WriteLine("Rewrite your ID please : ");
+            //string res = Console.ReadLine();
+            data = Infos();
+            int line = InformationLine(id);
+            Person p =Program.GetPerson(id);
+            Console.WriteLine("You want to change your password ");
+            Console.WriteLine("Please write your previous password : ");
+            string answer = Console.ReadLine();
+            while (answer != p.password)
+            {
+                Console.WriteLine("It's not your password, please try again : ");
+                answer = Console.ReadLine();
+            }
+            Console.WriteLine("Your new password must contain at least 6 characters.");
+            Console.WriteLine("Write your new password : ");
+            string pass = Console.ReadLine();
+            while (pass.Length < 6)
+            {
+                Console.WriteLine("Your password doesn't contain enough characters, please try again :");
+                pass = Console.ReadLine();
+            }
+            Console.WriteLine("Confirm your new password : ");
+            string confirm = Console.ReadLine();
+            while (confirm != pass)
+            {
+                Console.WriteLine("The confirmation has failed, please try again : ");
+                confirm = Console.ReadLine();
+            }
+            p.password = confirm;
+            data.ElementAt(line)[5]=confirm;
+            WriteInCsv();
+            Console.WriteLine("Your new password has been saved");
 
- 
+
+        }
+
 
         //public List<Student> StudentGroup()
         //{

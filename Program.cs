@@ -280,12 +280,21 @@ namespace ProjectVersion2
             List<Course> courses = database_CourseList.courseListe;
             UpdateEveryPersonStatus(all, courses, database_Login, database_CourseList, database_Fees);
             bool connexion = false;
+            FirstDisplay();
             while (connexion == false)
             {
+                BlackAndWhite();
                 Console.WriteLine("Enter your email:");
+                Console.ResetColor();
+                Console.ForegroundColor = ConsoleColor.Red;
                 string answer = Console.ReadLine();
+                Console.ResetColor();
+                BlackAndWhite();
                 Console.WriteLine("Enter your password");
+                Console.ResetColor();
+                Console.ForegroundColor = ConsoleColor.Red;
                 string answer2 = Console.ReadLine();
+                Console.ResetColor();
                 Console.WriteLine();
                 foreach(Person person in all)
                 {
@@ -305,6 +314,7 @@ namespace ProjectVersion2
                                 Console.WriteLine("2) To view your marks.");
                                 Console.WriteLine("3) To view your Attendance report.");
                                 Console.WriteLine("4) To view your finance.");
+                                Console.WriteLine("5) To change your password.");
                                 Console.WriteLine("type exit to leave");
                                 Console.WriteLine();
                                 answerstud=Console.ReadLine();
@@ -324,6 +334,9 @@ namespace ProjectVersion2
                                         break;
                                     case "4":
                                         student.DisplayFeeStatues();
+                                        break;
+                                    case "5":
+                                        database_Login.ChangePassword(student.ID);
                                         break;
                                     case "exit":
                                         Console.WriteLine();
@@ -347,6 +360,7 @@ namespace ProjectVersion2
                                 Console.WriteLine("1) To view your personal information.");
                                 Console.WriteLine("2) To modify the marks of your student.");
                                 Console.WriteLine("3) To modify the Attendance report of your students.");
+                                Console.WriteLine("4) To change your password.");
                                 Console.WriteLine("type exit to leave");
                                 Console.WriteLine();
                                 answerperson = Console.ReadLine();
@@ -363,6 +377,9 @@ namespace ProjectVersion2
                                     case "3":
                                         teacher.ModifyAttendanceInCourses();
                                         Console.WriteLine();
+                                        break;
+                                    case "4":
+                                        database_Login.ChangePassword(teacher.ID);
                                         break;
                                     case "exit":
                                         Console.WriteLine();
@@ -397,6 +414,9 @@ namespace ProjectVersion2
                                 Console.WriteLine("12) To change the teacher in charge of a workgroup in a course.");
                                 Console.WriteLine("13) To view all courses datas.");
                                 Console.WriteLine("14) To manage the finance status of a student.");
+                                Console.WriteLine("15) To see all the late assignements of a course.");
+                                Console.WriteLine("16) To see informations about the members of the organization.");
+                                Console.WriteLine("17) To change your password.");
                                 Console.WriteLine("type exit to leave");
                                 Console.WriteLine();
                                 answerperson = Console.ReadLine();
@@ -457,6 +477,25 @@ namespace ProjectVersion2
                                     case "14":
                                         admin.database_Fees.ModifyDatas();
                                         break;
+                                    case "15":
+                                        
+                                        Console.WriteLine("Which course do you want to check (choose between allemand, anglais, OOP and français) : ");
+                                        
+                                        string answ = Console.ReadLine().ToUpper();
+                                        foreach(Course c in admin.allcourses)
+                                        {
+                                            if(c.name.ToUpper()==answ)
+                                            {
+                                                c.HowMuchMissed();
+                                            }
+                                        }
+                                        break;
+                                    case "16":
+                                        database_Login.ShowSortedFile();
+                                        break;
+                                    case "17":
+                                        database_Login.ChangePassword(admin.ID);
+                                        break;
                                     case "exit":
                                         Console.WriteLine();
                                         break;
@@ -472,7 +511,66 @@ namespace ProjectVersion2
                 }
             }        
         }
+        static void FirstDisplay()
+        {
+            GetSpaces(16);
+            for (int i = 0; i < 80; i++)
+            {
+                
+                Console.Write("*");
 
+            }
+            Console.WriteLine(" ");
+            for(int i=0;i<4;i++)
+            {
+                GetSpaces(15);
+                Console.Write("|");
+                if(i==2)
+                {
+                    GetSpaces(30);
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("WELCOME TO YOUR PORTAL");
+                    Console.ResetColor();
+                    GetSpaces(28);
+                    Console.Write("|");
+                    Console.WriteLine(" ");
+                    GetSpaces(15);
+                    Console.Write("|");
+                }
+                GetSpaces(80);
+                Console.Write("|");
+                Console.WriteLine(" ");
+            }
+            GetSpaces(16);
+            for (int i = 0; i < 80; i++)
+            {
+
+                Console.Write("*");
+
+            }
+            for(int i=0;i<3;i++)
+            {
+                Console.WriteLine(" ");
+            }
+            GetSpaces(54);
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write("SIGN IN");
+            Console.ResetColor();
+            Console.WriteLine();
+
+        }
+        static void GetSpaces(int number)
+        {
+            for(int i=0;i<number;i++)
+            {
+                Console.Write(" ");
+            }
+        }
+        static void BlackAndWhite()
+        {
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Black;
+        }
         static void Main(string[] args) 
         {
             Database_Login database_Login = new Database_Login("DataFileLogIn1.csv");

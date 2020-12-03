@@ -47,7 +47,7 @@ namespace ProjectVersion2
                     string[] columns = lines[i].Split(';');
                     foreach (string element in columns)
                     {
-                        temporary.Add(element); 
+                        temporary.Add(element);
                     }
                     final.Add(temporary);
                 }
@@ -99,7 +99,7 @@ namespace ProjectVersion2
         {
             data = Infos();
             List<string> studInfo = new List<string>();
-            studInfo.Add(student.name); studInfo.Add(student.surname); studInfo.Add(student.ID); studInfo.Add(groupName);  
+            studInfo.Add(student.name); studInfo.Add(student.surname); studInfo.Add(student.ID); studInfo.Add(groupName);
             data.Add(studInfo);
             WriteInCsv();
         }
@@ -108,9 +108,9 @@ namespace ProjectVersion2
         {
             data = Infos();
             List<string> studInfo = new List<string>();
-            foreach(List<string>profile in data)
+            foreach (List<string> profile in data)
             {
-                if(profile[3]== groupName)
+                if (profile[3] == groupName)
                 {
                     try
                     {
@@ -119,16 +119,16 @@ namespace ProjectVersion2
                     catch
                     {
                         profile.Add(teacher.name); profile.Add(teacher.surname);
-                    }                
+                    }
                 }
-            }           
+            }
             WriteInCsv();
         }
 
         public void DeleteStudentInWorkgroup(Student student) //this method delete the student from the CSV file
         {
             data = Infos();
-            foreach(List<string> studinfo in data)
+            foreach (List<string> studinfo in data)
             {
                 if (student.ID == studinfo[2])
                 {
@@ -142,11 +142,11 @@ namespace ProjectVersion2
         {
             data = Infos();
             bool found = false;
-            for(int i = 0; i < data.Count(); i++)
+            for (int i = 0; i < data.Count(); i++)
             {
                 if (data[i][2] == id)
                 {
-                    found = true;              
+                    found = true;
                 }
             }
             return found;
@@ -185,7 +185,7 @@ namespace ProjectVersion2
             {
                 for (int i = 0; i < list.Count; i++)
                 {
-                   
+
                     if (list[i][2] == firstName)
                     {
                         found = true;
@@ -211,7 +211,7 @@ namespace ProjectVersion2
             return -1; //return -1 if nothing is found.
         }
 
-        public int FindStudentInList(List<List<string>> list,Student student)
+        public int FindStudentInList(List<List<string>> list, Student student)
         {
             for (int i = 0; i < list.Count; i++)
             {
@@ -233,14 +233,14 @@ namespace ProjectVersion2
             }
             return -1;
         }
-        
+
         public List<string> GetMarks(string id)//will return a list of string containing the name of the course + marks
         {
             data = Infos();
             List<string> marks = new List<string>();
-            marks.Add(courseName+" : ");
-            int line = FindStudentInList(data,id);
-            if(line != -1)
+            marks.Add(courseName + " : ");
+            int line = FindStudentInList(data, id);
+            if (line != -1)
             {
                 try //if the student has mark, there are added
                 {
@@ -253,11 +253,11 @@ namespace ProjectVersion2
                 catch
                 {
                     Console.WriteLine("the student has no mark in this course");
-                    return marks=null;
-                }               
+                    return marks = null;
+                }
             }
             Console.WriteLine("the student is not in this course");
-            return marks=null;
+            return marks = null;
         }
 
         //this methode is not the one used
@@ -382,12 +382,12 @@ namespace ProjectVersion2
                     {
                         Console.WriteLine("the student need to have an assigned professor to manage its marks");
                     }
-                }                
+                }
                 catch
                 {
                     Console.WriteLine("the student need to have an assigned professor to manage its marks");
                 }
-                               
+
             }
             WriteInCsv(); //save modifications in the csv
         }
@@ -395,7 +395,7 @@ namespace ProjectVersion2
         public void ModifMarks(Student student) //this method will enable mark modification used in the teacher class
         {
             data = Infos(); //actualize with the data inside the csv file
-            int line = FindStudentInList(data,student); //this function give the index of the researched student in the list.
+            int line = FindStudentInList(data, student); //this function give the index of the researched student in the list.
             if (line != -1)
             {
                 Console.WriteLine("Marks of : " + data[line][0] + data[line][1] + " : ");
@@ -501,15 +501,27 @@ namespace ProjectVersion2
             }
             WriteInCsv(); //save modifications in the csv
         }
+        public void ShowFile() //The purpose of this method is to show all informations on every people in the file
+        {
+            data = Infos();
+            for (int i = 0; i < data.Count; i++)
+            {
+                for (int j = 0; j < data.ElementAt(i).Count; j++)
+                {
+                    Console.Write(data.ElementAt(i).ElementAt(j) + "; ");
+                }
+                Console.WriteLine(" ");
+            }
 
 
+
+
+
+        }
 
 
 
     }
-
-
-
 }
 
 

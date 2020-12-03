@@ -408,5 +408,60 @@ namespace ProjectVersion2
             }
             return everyWorkGroup;   //should get the list of all WorkGroup in it            
         }
+        public List<Student> MissedAssignements() //return students that have late assignements by comparing the quantity of marks of each student
+        {
+            List<Student> answer = new List<Student>();
+            List<List<string>> data = this.dataFileMarks.Infos();
+            int max = 0;
+            for (int i = 0; i< data.Count();i++)
+            {
+                if(data.ElementAt(i).Count()>max)
+                {
+                    max = data.ElementAt(i).Count();
+                }
+            }
+            for(int a=0;a<data.Count();a++)
+            {
+                if(data.ElementAt(a).Count()<max)
+                {
+                    string id = data.ElementAt(a).ElementAt(2);
+                    Person s = Program.GetPerson(id);
+                    Student stud = s as Student;
+                    answer.Add(stud);
+                }
+            }
+            return answer;
+        }
+        public void HowMuchMissed()// show the quantity of late assignements students have
+        {
+            List<Student> missed = this.MissedAssignements();
+            if(missed.Count()<1)
+            {
+                Console.WriteLine("There is no late assignement in this course");
+            }
+            List<List<string>> data = this.dataFileMarks.ReturnDatas();
+            int max = 0;
+            for (int i = 0; i < data.Count(); i++)
+            {
+                if (data.ElementAt(i).Count() > max)
+                {
+                    max = data.ElementAt(i).Count();
+                }
+            }
+            
+            for(int a =0;a<data.Count();a++)
+            {
+                for(int b=0;b<missed.Count();b++)
+                {
+                    
+                    if (data.ElementAt(a).ElementAt(2)==missed.ElementAt(b).ID)
+                    {
+                        
+                        int diff = max - data.ElementAt(a).Count();
+                        Console.WriteLine("Student " + missed.ElementAt(b).name + " " + missed.ElementAt(b).surname + " has " + diff + " assignements left");
+                    }
+                }
+            }
+        }
     }
 }
