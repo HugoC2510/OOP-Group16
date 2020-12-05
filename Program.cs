@@ -274,7 +274,7 @@ namespace ProjectVersion2
                 }
             }
         }
-        public static void Application(Database_Login database_Login, Database_CourseList database_CourseList, Database_Fees database_Fees)
+        public static void Application(Database_Login database_Login, Database_CourseList database_CourseList, Database_Fees database_Fees,Database_Calendar calendar)
         {
             List<Person> all = database_Login.AllPeople();
             List<Course> courses = database_CourseList.courseListe;
@@ -417,6 +417,7 @@ namespace ProjectVersion2
                                 Console.WriteLine("15) To see all the late assignements of a course.");
                                 Console.WriteLine("16) To see informations about the members of the organization.");
                                 Console.WriteLine("17) To change your password.");
+                                Console.WriteLine("18) To manage the academic calendar");
                                 Console.WriteLine("type exit to leave");
                                 Console.WriteLine();
                                 answerperson = Console.ReadLine();
@@ -496,6 +497,9 @@ namespace ProjectVersion2
                                     case "17":
                                         database_Login.ChangePassword(admin.ID);
                                         break;
+                                    case "18":
+                                        ManageCalendar(calendar);
+                                        break;
                                     case "exit":
                                         Console.WriteLine();
                                         break;
@@ -559,6 +563,46 @@ namespace ProjectVersion2
             Console.WriteLine();
 
         }
+        static void ManageCalendar(Database_Calendar calendar)
+        {
+            Console.WriteLine("Which action do you want to do with the academic calendar ? : ");
+            Console.WriteLine("1) To show all dates for all courses");
+            Console.WriteLine("2) To delete a date");
+            Console.WriteLine("3) To add a date");
+            Console.WriteLine("4) To check if a date is already written in the academic calendar");
+            Console.WriteLine("5) To modify a date");
+            Console.WriteLine();
+            int answer = Convert.ToInt32(Console.ReadLine());
+            string course = "";
+            while(answer<1 || answer>5)
+            {
+                Console.WriteLine("Please write a correct choice : ");
+                answer = Convert.ToInt32(Console.ReadLine());
+            }
+            switch(answer)
+            {
+                case 1:
+                    calendar.DisplayCalendar();
+                    break;
+                case 2:
+                    course=calendar.AskCourse();
+                    calendar.DeleteDate(course);
+                    break;
+                case 3:
+                    course = calendar.AskCourse();
+                    calendar.AddDate(course);
+                    break;
+                case 4:
+                    course = calendar.AskCourse();
+                    calendar.FindDate(course);
+                    break;
+                case 5:
+                    course = calendar.AskCourse();
+                    calendar.ModifyDate(course);
+                    break;
+
+            }
+        }
         static void GetSpaces(int number)
         {
             for(int i=0;i<number;i++)
@@ -576,12 +620,13 @@ namespace ProjectVersion2
             Database_Login database_Login = new Database_Login("DataFileLogIn1.csv");
             Database_CourseList database_CourseList = new Database_CourseList("Database_CourseList.csv");
             Database_Fees database_Fees = new Database_Fees();
+            Database_Calendar calendar = new Database_Calendar("DataBase_Calendar.csv"); 
             Console.WriteLine("files generated");
-            Application(database_Login, database_CourseList, database_Fees);
+            Application(database_Login, database_CourseList, database_Fees,calendar);
 
             //Database_Fees database_Fees = new Database_Fees(database_Login.AllPeople());
             //database_Fees.ModifyDatas();
-            
+
             //List<Person> all = new List<Person>();
             //all = database_Login.AllPeople();
             //List<Course> courses = new List<Course>();
@@ -635,7 +680,7 @@ namespace ProjectVersion2
             //            stud.ModifyAttendanceInCourses();
             //        }
             //    }
-                
+
             //}
             ////List<Course> courses = database_CourseList.courseListe;
             //foreach (Course course in courses)
@@ -643,7 +688,7 @@ namespace ProjectVersion2
             //    course.ViewDatas();
             //}
             //database_CourseList.DeleteACourse();
-           
+
 
             //Console.WriteLine("type the name of the course you want to create");
             //Course course = new Course(Console.ReadLine(), "A2");
@@ -656,6 +701,7 @@ namespace ProjectVersion2
             //course.ModifyTeacherIntoWorkGroupOfaCourse();
             //course.ModifyMark();
             //course.ModifyAttendance();
+            //Database_Calendar.FindDate("english");
             Console.Read();
             //for next time: put a function called mise a jour course list
         }
