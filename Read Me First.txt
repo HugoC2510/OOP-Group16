@@ -1,0 +1,48 @@
+Hi John, 
+
+The work your about to test is from the group 16 and do not involve anyone else.
+We hope that while testing our app your are not going to have any bugs and that your experience will be fluid and enjoyable.
+Please note that our app is based on file storage. For this reason you may have to remember the following in order to have the best experience possible:
+After every action that involve data storage, the action is stored immediately. Despite this, the informations you see on the portal are not immediately updated.
+That is because you have to re log to your portal to see the updated informations. Not doing so may conduct to misunderstanding and eventually some bugs 
+
+For your conveniance, we have created a student profile and a teacher profile that you may use to have a look to all the features of our app. Of course you can try to log in 
+with every account on the database logIn that you see but most will be empty and doesn't belong to a courses or to a workgroup: you will not see deeply our program and you won't be able
+to quickly see all the features. despite this, if you have time you can buid a new workgroup full of student in a matter and associate it with a teacher. then you can log in with the 
+teacher's account you have chosen to put marks, attendance report or manage the course the way you want to. Note that you have to use an administrator account to do so.
+
+student account mail: JocelynLamers@college.ie
+student account password: Lamers2001
+
+teacher account mail: SharronLamberth@college.ie
+teacher account password: Lamberth2009
+
+
+you can try every administrator account you want. they all work the same. we have put an account to make it easier for you:
+
+administrator account mail: RuthTai@college.ie
+administrator account password: Tai2047
+
+
+through every week we have updated our status in all project management application we used. 
+If you desire to have a look, please find all the link used for our project management below:
+
+link of our gitHub: https://github.com/HugoC2510/OOP-Group16.git
+link of our Trello: https://trello.com/b/XqgVvJOe/oop-group-16
+link of our lucidChart: https://lucid.app/lucidchart/3a2932bd-47ee-4b46-9d5e-4006632842cc/edit?page=HWEp-vi-RSFO#?folder_id=home&browser=icon
+
+Also, our github commit are organised by week. There is one branch for every one of the 8 weeks of the project and a build note file in .txt
+that you can read in order to see the sum up of the work made this week. This can also be seen on the Trello.
+
+if you have any question or request about our work, feel free to contact us.
+
+As we will probably not see each other again, all the team 16 wishes you a Merry Christmas and a happy New Years Eve.
+we thank you for everything.
+Best regards,
+
+Hugo camps
+Julien Msika
+Jean-Marc Hanna
+Lorenzo Mendes
+Aurelien Delicourt
+Albert de Watrigant
