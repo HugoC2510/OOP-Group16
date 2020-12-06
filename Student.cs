@@ -8,6 +8,14 @@ namespace ProjectVersion2
 {
     public class Student : Person
     {
+        //made by: 
+        //23168 Hugo Camps
+        //23175 Albert De Watrigant
+        //23196 Aurelien Delicourt
+        //23172 Jean-Marc Hanna
+        //22842 Julien Msika
+        //22830 Lorenzo Mendes
+
         public List<WorkGroup> group;
         public List<string> courseList;
         public List<List<string>> marks; //each course will get its ist of marks
@@ -58,6 +66,9 @@ namespace ProjectVersion2
         }
         public void DisplayAllMarks()
         {
+            double total = 0;
+
+            int count = 0;
             foreach (List<string> coursemark in marks)
             {
                 foreach (string mark in coursemark)
@@ -65,7 +76,33 @@ namespace ProjectVersion2
                     Console.Write(mark + " ");
                 }
                 Console.WriteLine();
+                if (coursemark.Count() > 1) ;
+                {
+                    for (int i = 1; i < coursemark.Count(); i++)
+                    {
+                        double newMark = Convert.ToDouble(coursemark[i]);
+                        total += newMark;
+                        count++;
+                    }
+                }
+                double total2 = 0;
+
+                int count2 = 0;
+                if (coursemark.Count() > 1) ;
+                {
+                    for (int i = 1; i < coursemark.Count(); i++)
+                    {
+                        double newMark = Convert.ToDouble(coursemark[i]);
+                        total2 += newMark;
+                        count2++;
+                    }
+
+                }
+                Console.WriteLine("the mean of the student in " + coursemark[0] + total2 / count2);
+                Console.WriteLine();
             }
+            Console.WriteLine("the general mean of the student is : " + total / count);
+            Console.WriteLine();
         }
 
         public void DisplayAllAttendanceReport()
@@ -97,8 +134,6 @@ namespace ProjectVersion2
             }
             return res;
         }
-
-
         public int FindStudentInList(List<Student> list) //return the indexe of the researched student in the list
         {
             Console.WriteLine("To find the student, type Firstname or ID ");
@@ -138,9 +173,10 @@ namespace ProjectVersion2
                         return i;
                     }
                 }
-                //exception to handle here if the person is not found              
+                              
             }
             return -1; //return -1 if nothing is found.
         }
+        
     }   
 }

@@ -9,6 +9,14 @@ namespace ProjectVersion2
 {
     public class Database_CourseList //template: courseName,yearGrade,marks file,attendance file
     {
+        //made by: 
+        //23168 Hugo Camps
+        //23175 Albert De Watrigant
+        //23196 Aurelien Delicourt
+        //23172 Jean-Marc Hanna
+        //22842 Julien Msika
+        //22830 Lorenzo Mendes
+
         private string filepath;
         List<List<string>> data;
         public List<Course> courseListe { get; set; }

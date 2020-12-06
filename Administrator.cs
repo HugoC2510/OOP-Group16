@@ -8,6 +8,14 @@ namespace ProjectVersion2
 {
     public class Administrator: Person
     {
+        //made by: 
+        //23168 Hugo Camps
+        //23175 Albert De Watrigant
+        //23196 Aurelien Delicourt
+        //23172 Jean-Marc Hanna
+        //22842 Julien Msika
+        //22830 Lorenzo Mendes
+
         public List<Course> allcourses;
         public List<Person> allpersons;
         public Database_Login database_Login;
@@ -116,6 +124,11 @@ namespace ProjectVersion2
         public void AddPersonInOrganization()
         {
             database_Login.AddInformation();
+            if(database_Login.ReturnLastPerson() is Student && database_Login.ReturnLastPerson() != null)
+            {
+                Student stud = database_Login.ReturnLastPerson();
+                database_Fees.AddStudent(stud);
+            }
         }
 
         public void ShowProfile()

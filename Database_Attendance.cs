@@ -9,6 +9,14 @@ namespace ProjectVersion2
 {
     public class Database_Attendance// mandatory template for this file: firstname, surname, id, worgroupName, professor name, professor surname and then all string about attendance
     {
+        //made by: 
+        //23168 Hugo Camps
+        //23175 Albert De Watrigant
+        //23196 Aurelien Delicourt
+        //23172 Jean-Marc Hanna
+        //22842 Julien Msika
+        //22830 Lorenzo Mendes
+
         public string filepath; //file path
         List<List<string>> data; //all data related to the file
         List<WorkGroup> wrkGroupList; //all students are supposed to be inside Workgroups. this is used only on the first creation of the file, when the course is created

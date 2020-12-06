@@ -9,6 +9,13 @@ namespace ProjectVersion2
 {
     class Program
     {
+        //made by: 
+        //23168 Hugo Camps
+        //23175 Albert De Watrigant
+        //23196 Aurelien Delicourt
+        //23172 Jean-Marc Hanna
+        //22842 Julien Msika
+        //22830 Lorenzo Mendes
         public static Person GetPerson()
         {
             Console.WriteLine();
@@ -315,6 +322,7 @@ namespace ProjectVersion2
                                 Console.WriteLine("3) To view your Attendance report.");
                                 Console.WriteLine("4) To view your finance.");
                                 Console.WriteLine("5) To change your password.");
+                                Console.WriteLine("6) To view the academic calendar.");
                                 Console.WriteLine("type exit to leave");
                                 Console.WriteLine();
                                 answerstud=Console.ReadLine();
@@ -337,6 +345,10 @@ namespace ProjectVersion2
                                         break;
                                     case "5":
                                         database_Login.ChangePassword(student.ID);
+                                        break;
+                                    case "6":
+                                        ManageCalendarRestricted(calendar);
+                                        Console.WriteLine();
                                         break;
                                     case "exit":
                                         Console.WriteLine();
@@ -361,6 +373,7 @@ namespace ProjectVersion2
                                 Console.WriteLine("2) To modify the marks of your student.");
                                 Console.WriteLine("3) To modify the Attendance report of your students.");
                                 Console.WriteLine("4) To change your password.");
+                                Console.WriteLine("5) To view the academic calendar.");
                                 Console.WriteLine("type exit to leave");
                                 Console.WriteLine();
                                 answerperson = Console.ReadLine();
@@ -380,6 +393,10 @@ namespace ProjectVersion2
                                         break;
                                     case "4":
                                         database_Login.ChangePassword(teacher.ID);
+                                        break;
+                                    case "5":
+                                        ManageCalendarRestricted(calendar);
+                                        Console.WriteLine();
                                         break;
                                     case "exit":
                                         Console.WriteLine();
@@ -417,7 +434,7 @@ namespace ProjectVersion2
                                 Console.WriteLine("15) To see all the late assignements of a course.");
                                 Console.WriteLine("16) To see informations about the members of the organization.");
                                 Console.WriteLine("17) To change your password.");
-                                Console.WriteLine("18) To manage the academic calendar");
+                                Console.WriteLine("18) To manage the academic calendar.");
                                 Console.WriteLine("type exit to leave");
                                 Console.WriteLine();
                                 answerperson = Console.ReadLine();
@@ -440,12 +457,13 @@ namespace ProjectVersion2
                                         Console.WriteLine();
                                         break;
                                     case "5":
-                                        admin.ModifyProfile();
+                                        admin.ModifyProfile();  //have to remove it from the fees file too
                                         Console.WriteLine();
                                         break;
                                     case "6":
                                         admin.RemovePersonFromOrganization();
                                         Console.WriteLine();
+                                        
                                         break;
                                     case "7":
                                         admin.ShowProfile();
@@ -479,8 +497,13 @@ namespace ProjectVersion2
                                         admin.database_Fees.ModifyDatas();
                                         break;
                                     case "15":
-                                        
-                                        Console.WriteLine("Which course do you want to check (choose between allemand, anglais, OOP and français) : ");
+                                        Console.WriteLine("All courses in the organization:"); Console.WriteLine();
+                                        foreach (Course course in admin.allcourses)
+                                        {
+                                            Console.WriteLine(course.name);
+                                        }
+                                        Console.WriteLine();
+                                        Console.WriteLine("Which course do you want to check : ");
                                         
                                         string answ = Console.ReadLine().ToUpper();
                                         foreach(Course c in admin.allcourses)
@@ -490,15 +513,19 @@ namespace ProjectVersion2
                                                 c.HowMuchMissed();
                                             }
                                         }
+                                        Console.WriteLine();
                                         break;
                                     case "16":
                                         database_Login.ShowSortedFile();
+                                        Console.WriteLine();
                                         break;
                                     case "17":
                                         database_Login.ChangePassword(admin.ID);
+                                        Console.WriteLine();
                                         break;
                                     case "18":
                                         ManageCalendar(calendar);
+                                        Console.WriteLine();
                                         break;
                                     case "exit":
                                         Console.WriteLine();
@@ -603,6 +630,10 @@ namespace ProjectVersion2
 
             }
         }
+        static void ManageCalendarRestricted(Database_Calendar calendar)
+        {
+            calendar.DisplayCalendar(); //only shows the academic calendar
+        }
         static void GetSpaces(int number)
         {
             for(int i=0;i<number;i++)
@@ -622,88 +653,8 @@ namespace ProjectVersion2
             Database_Fees database_Fees = new Database_Fees();
             Database_Calendar calendar = new Database_Calendar("DataBase_Calendar.csv"); 
             Console.WriteLine("files generated");
-            Application(database_Login, database_CourseList, database_Fees,calendar);
-
-            //Database_Fees database_Fees = new Database_Fees(database_Login.AllPeople());
-            //database_Fees.ModifyDatas();
-
-            //List<Person> all = new List<Person>();
-            //all = database_Login.AllPeople();
-            //List<Course> courses = new List<Course>();
-            //courses = database_CourseList.courseListe;
-            //Course cour = new Course("anglais", "A2");
-            //cour.ModifyMark();
-            //database_CourseList.AddACourse(cour);
-            //foreach (Course course in courses)
-            //{
-            //    course.ViewDatas();
-            //    //if (course.name == "anglais")
-            //    //{
-            //    //    course.ModifyTeacherIntoWorkGroupOfaCourse();
-            //    //    course.ModifyMark();
-            //    //}
-            //}
-            //Console.WriteLine("list person generated");
-            //UpdateEveryPersonStatus(all, courses, database_Login);
-            //Console.WriteLine("list person updated");
-            //foreach (Person person in all)
-            //{
-            //    if(person is Student)
-            //    {
-            //        Student stud = person as Student;
-            //        if (stud.ID == "2001")
-            //        {
-            //            stud.Tostring();
-            //            foreach (string course in stud.courseList)
-            //            {
-            //                Console.WriteLine(course);
-            //            }
-            //            stud.DisplayAllMarks();
-            //            stud.DisplayAllAttendanceReport();
-            //        }
-            //    }
-            //    if(person is Teacher)
-            //    {
-            //        Teacher stud = person as Teacher;
-            //        if (stud.ID == "2009")
-            //        {
-            //            stud.Tostring();
-            //            foreach(Course course in stud.courses)
-            //            {
-            //                Console.WriteLine(course.name);
-            //            }
-            //            foreach(WorkGroup group in stud.groups)
-            //            {
-            //                Console.WriteLine(group.name);
-            //            }
-            //            //stud.ModifyMarksInCourses();
-            //            stud.ModifyAttendanceInCourses();
-            //        }
-            //    }
-
-            //}
-            ////List<Course> courses = database_CourseList.courseListe;
-            //foreach (Course course in courses)
-            //{
-            //    course.ViewDatas();
-            //}
-            //database_CourseList.DeleteACourse();
-
-
-            //Console.WriteLine("type the name of the course you want to create");
-            //Course course = new Course(Console.ReadLine(), "A2");
-            //database_CourseList.AddACourse(course);
-            ////Course course = new Course("allemand", "A2", "allemand_dataFileMarks.csv", "allemand_dataFileAttendance.csv");
-            ////database_CourseList.AddACourse(course);
-            ////course.ViewDatas();
-            ////course.AddWrkGroupToCourse();
-            //course.AddStudentIntoWorkGroupOfaCourse();
-            //course.ModifyTeacherIntoWorkGroupOfaCourse();
-            //course.ModifyMark();
-            //course.ModifyAttendance();
-            //Database_Calendar.FindDate("english");
+            Application(database_Login, database_CourseList, database_Fees,calendar);           
             Console.Read();
-            //for next time: put a function called mise a jour course list
         }
     }
 }

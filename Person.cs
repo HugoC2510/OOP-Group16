@@ -8,6 +8,14 @@ namespace ProjectVersion2
 {
     public abstract class Person
     {
+        //made by: 
+        //23168 Hugo Camps
+        //23175 Albert De Watrigant
+        //23196 Aurelien Delicourt
+        //23172 Jean-Marc Hanna
+        //22842 Julien Msika
+        //22830 Lorenzo Mendes
+
         public string ID;
         public string name;
         public string surname;
@@ -31,7 +39,6 @@ namespace ProjectVersion2
         }
         public abstract void Tostring();
         public abstract bool ConnectionCheck();
-
         public bool EqualPerson(Person obj) //this method enalbe comparison between two people. they are equals if their informations are the same.
         {
             bool same = true;
@@ -87,9 +94,6 @@ namespace ProjectVersion2
                 }               
             }
             return null;
-
         }
-        //public abstract bool Equal(Person person);
-
     }
 }

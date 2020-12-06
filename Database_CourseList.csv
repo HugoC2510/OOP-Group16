@@ -1,4 +1,5 @@
-allemand;A2;allemand_dataFileMarks.csv;allemand_dataFileAttendance.csv
-anglais;A2;anglais_dataFileMarks.csv;anglais_dataFileAttendance.csv
-francais;A1;francais_dataFileMarks.csv;francais_dataFileAttendance.csv
+German;A2;german_dataFileMarks.csv;german_dataFileAttendance.csv
+English;A2;english_dataFileMarks.csv;english_dataFileAttendance.csv
+French;A1;french_dataFileMarks.csv;french_dataFileAttendance.csv
 OOP;A1;OOP_dataFileMarks.csv;OOP_dataFileAttendance.csv
+SoftSkills;A1;SoftSkills_dataFileMarks.csv;SoftSkills_dataFileAttendance.csv
