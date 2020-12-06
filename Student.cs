@@ -8,6 +8,14 @@ namespace ProjectVersion2
 {
     public class Student : Person
     {
+        //made by: 
+        //23168 Hugo Camps
+        //23175 Albert De Watrigant
+        //23196 Aurelien Delicourt
+        //23172 Jean-Marc Hanna
+        //22842 Julien Msika
+        //22830 Lorenzo Mendes
+
         public List<WorkGroup> group;
         public List<string> courseList;
         public List<List<string>> marks; //each course will get its ist of marks
@@ -126,8 +134,6 @@ namespace ProjectVersion2
             }
             return res;
         }
-
-
         public int FindStudentInList(List<Student> list) //return the indexe of the researched student in the list
         {
             Console.WriteLine("To find the student, type Firstname or ID ");
@@ -167,7 +173,7 @@ namespace ProjectVersion2
                         return i;
                     }
                 }
-                //exception to handle here if the person is not found              
+                              
             }
             return -1; //return -1 if nothing is found.
         }

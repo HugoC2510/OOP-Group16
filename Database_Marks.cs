@@ -9,6 +9,14 @@ namespace ProjectVersion2
 {
     public class Database_Marks  // mandatory template for this file: firstname, surname, id, worgroupName, professor name, professor surname and then marks
     {
+        //made by: 
+        //23168 Hugo Camps
+        //23175 Albert De Watrigant
+        //23196 Aurelien Delicourt
+        //23172 Jean-Marc Hanna
+        //22842 Julien Msika
+        //22830 Lorenzo Mendes
+
         public string filepath; //file path
         List<List<string>> data; //all data related to the file
         List<WorkGroup> wrkGroupList; //all students are supposed to be inside Workgroups. this is used only on the first creation of the file, when the course is created
@@ -398,7 +406,7 @@ namespace ProjectVersion2
             int line = FindStudentInList(data, student); //this function give the index of the researched student in the list.
             if (line != -1)
             {
-                Console.WriteLine("Marks of : " + data[line][0] + data[line][1] + " : ");
+                Console.Write("Marks of : " + data[line][0] + data[line][1] + " : ");
                 bool markToModify = false; //will indicates if there is mark available
                 try
                 {
@@ -406,6 +414,7 @@ namespace ProjectVersion2
                     {
                         Console.Write(data[line][i] + " ");
                     }
+                    Console.WriteLine();
                     markToModify = true;
                 }
                 catch

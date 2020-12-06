@@ -7,8 +7,16 @@ using System.IO;
 
 namespace ProjectVersion2
 {
-    public class Database_Login   //this class and its file is very important as every person's account is saved there.
-    {                                        //finished on 4/11
+    public class Database_Login   //this class and its file is very important as every person's account is saved there.  finished on 4/11
+    {      
+        //made by: 
+        //23168 Hugo Camps
+        //23175 Albert De Watrigant
+        //23196 Aurelien Delicourt
+        //23172 Jean-Marc Hanna
+        //22842 Julien Msika
+        //22830 Lorenzo Mendes
+
         private string filepath;
         List<List<string>> data;
         public Database_Login(string _filepath)
@@ -273,8 +281,37 @@ namespace ProjectVersion2
             newAccount.Add(Console.ReadLine());
             Console.WriteLine("Mail : ");
             newAccount.Add(Console.ReadLine());
-            Console.WriteLine("Status : ");
-            newAccount.Add(Console.ReadLine());
+            bool correct = false;
+            string answer = "";
+            while (correct != true)
+            {
+                Console.WriteLine("Choose the status of this account:");
+                Console.WriteLine();
+                Console.WriteLine("1) for a student account");
+                Console.WriteLine("2) for a professeur account");
+                Console.WriteLine("3) for an administrator account");
+                answer = "";
+                answer=Console.ReadLine();
+                switch (answer)
+                {
+                    case "1":
+                        answer = "student";
+                        correct = true;
+                        break;
+                    case "2":
+                        answer = "professor";
+                        correct = true;
+                        break;
+                    case "3":
+                        answer = "administrator";
+                        correct = true;
+                        break;
+                    default:
+                        Console.WriteLine("incorrect answer");
+                        break;
+                }
+            }            
+            newAccount.Add(answer);
             Console.WriteLine("ID : ");
             newAccount.Add(Console.ReadLine());
             Console.WriteLine("Password : ");
@@ -286,8 +323,20 @@ namespace ProjectVersion2
             Console.WriteLine("Phone number : ");
             newAccount.Add(Console.ReadLine());
             data.Add(newAccount);
+            if (newAccount[3] == "student")
+            {
+                try
+                {
+                    Student student = new Student(newAccount[0], newAccount[1], Convert.ToInt32(newAccount[7]), newAccount[6], newAccount[2], newAccount[8], newAccount[4], newAccount[5]);
+                }
+                catch
+                {
+
+                }
+            }
             WriteInCsv();
             data = Infos();
+            Console.WriteLine("new profile created!");
         }
         public int infoColumn(string word)  //to modify if there is more information to check
         {
@@ -408,6 +457,29 @@ namespace ProjectVersion2
             }
             return res;
         }
+
+        public Student ReturnLastPerson()
+        {
+            data = Infos();
+            if (data[data.Count() - 1][3] == "student")
+            {
+                string name = data[data.Count() - 1][0];
+                string surname = data[data.Count() - 1][1];
+                string mail = data[data.Count() - 1][2];
+                string id = data[data.Count() - 1][4];
+                string password = data[data.Count() - 1][5];
+                string sex = data[data.Count() - 1][6];
+                int age = Convert.ToInt32(data[data.Count() - 1][7]);
+                string phone = data[data.Count() - 1][8];
+                Student student = new Student(name, surname, age, sex, mail, phone, id, password);
+                return student;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public void RemoveInformation() //this method enable the suppression of an user
         {
             data = Infos();
@@ -435,15 +507,29 @@ namespace ProjectVersion2
                 names[0] = Convert.ToString(firstName); names[1] = surName;
                 line = InformationLine(names);      //exception to handle here if the person is not found              
             }
-            Console.WriteLine("Current informations of " + data.ElementAt(line)[0] + " " + data.ElementAt(line)[1] + " ID: " + data.ElementAt(line)[4] + " :");
-            Console.WriteLine("Firsname: " + data.ElementAt(line)[0] + "  Surname: " + data.ElementAt(line)[1] + " Mail: " + data.ElementAt(line)[2]);
-            Console.WriteLine("Status: " + data.ElementAt(line)[3] + " ID: " + data.ElementAt(line)[4] + " Password: " + data.ElementAt(line)[5] + " sexe: " + data.ElementAt(line)[6]);
-            Console.WriteLine("Age: " + data.ElementAt(line)[7] + " Phonenumber: " + data.ElementAt(line)[8]);
-            Console.WriteLine();
-            Console.WriteLine("Account removed");
+            try
+            {
+                Console.WriteLine("Current informations of " + data.ElementAt(line)[0] + " " + data.ElementAt(line)[1] + " ID: " + data.ElementAt(line)[4] + " :");
+                Console.WriteLine("Firsname: " + data.ElementAt(line)[0] + "  Surname: " + data.ElementAt(line)[1] + " Mail: " + data.ElementAt(line)[2]);
+                Console.WriteLine("Status: " + data.ElementAt(line)[3] + " ID: " + data.ElementAt(line)[4] + " Password: " + data.ElementAt(line)[5] + " sexe: " + data.ElementAt(line)[6]);
+                Console.WriteLine("Age: " + data.ElementAt(line)[7] + " Phonenumber: " + data.ElementAt(line)[8]);
+                Console.WriteLine();
+                Console.WriteLine("You have deleted the access to this profile. this person will not be able to log in again.");
+                Console.WriteLine("Please, note that if the person is a student and if he has paid all the due fees, you have to manually");
+                Console.WriteLine("remove him from the fees database, note its id to find him faster. Also, note that you may have to remove");
+                Console.WriteLine("him from every courses he belong too.");
+                data.RemoveAt(line);
+                WriteInCsv();
+                Console.WriteLine("Account removed");
+            }
+            catch
+            {
+                Console.WriteLine("This account does no longer exist");
+            }
+            
+            
             Console.Read();
-            data.RemoveAt(line);
-            WriteInCsv();
+            
         }
         public void WriteInCsv()
         {
@@ -544,77 +630,6 @@ namespace ProjectVersion2
             data.ElementAt(line)[5]=confirm;
             WriteInCsv();
             Console.WriteLine("Your new password has been saved");
-
-
         }
-
-
-        //public List<Student> StudentGroup()
-        //{
-        //    List<List<string>> data = this.Infos();
-        //    List<Student> answer = new List<Student>();
-        //    foreach(List<string> l in data)
-        //    {
-        //        if (l.ElementAt(3).ToUpper() == "STUDENT") 
-        //        {
-        //            string name = l.ElementAt(0);
-        //            string surname = l.ElementAt(1);
-        //            string mail = l.ElementAt(2);
-        //            string id = l.ElementAt(4);
-        //            string password = l.ElementAt(5);
-        //            char sex = Convert.ToChar(l.ElementAt(6));
-        //            int age = Convert.ToInt32(l.ElementAt(7));
-        //            string phone = l.ElementAt(8);
-        //            Student test = new Student(name, surname, age, sex, mail, phone, id,password);
-        //            answer.Add(test);
-        //        }
-        //    }
-        //    return answer;
-        //}
-        //public List<Teacher> TeacherGroup()
-        //{
-        //    List<List<string>> data = this.Infos();
-        //    List<Teacher> answer = new List<Teacher>();
-        //    foreach (List<string> l in data)
-        //    {
-        //        if (l.ElementAt(3).ToUpper() == "TEACHER")
-        //        {
-        //            string name = l.ElementAt(0);
-        //            string surname = l.ElementAt(1);
-        //            string mail = l.ElementAt(2);
-        //            string id = l.ElementAt(4);
-        //            string password = l.ElementAt(5);
-        //            char sex = Convert.ToChar(l.ElementAt(6));
-        //            int age = Convert.ToInt32(l.ElementAt(7));
-        //            string phone = l.ElementAt(8);
-        //            Teacher test = new Teacher(id, name, surname, age, sex, mail, phone, password);
-        //            answer.Add(test);
-        //        }
-        //    }
-        //    return answer;
-        //}
-        //public List<Administrator> AdminGroup()
-        //{
-        //    List<List<string>> data = this.Infos();
-        //    List<Administrator> answer = new List<Administrator>();
-        //    foreach (List<string> l in data)
-        //    {
-        //        if (l.ElementAt(3).ToUpper() == "ADMINISTRATOR")
-        //        {
-        //            string name = l.ElementAt(0);
-        //            string surname = l.ElementAt(1);
-        //            string mail = l.ElementAt(2);
-        //            string id = l.ElementAt(4);
-        //            string password = l.ElementAt(5);
-        //            char sex = Convert.ToChar(l.ElementAt(6));
-        //            int age = Convert.ToInt32(l.ElementAt(7));
-        //            string phone = l.ElementAt(8);
-        //            Administrator test = new Administrator(id, name, surname, age, sex, mail, phone, password);
-        //            answer.Add(test);
-        //        }
-        //    }
-        //    return answer;
-        //}
-
     }
 }

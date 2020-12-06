@@ -8,6 +8,14 @@ namespace ProjectVersion2
 {
     public class Course  //comment stocker la classe course et ses etudiants a long terme
     {
+        //made by: 
+        //23168 Hugo Camps
+        //23175 Albert De Watrigant
+        //23196 Aurelien Delicourt
+        //23172 Jean-Marc Hanna
+        //22842 Julien Msika
+        //22830 Lorenzo Mendes
+
         public List<WorkGroup> allGroups;
         public string name;
         public Database_Marks dataFileMarks;

@@ -8,6 +8,14 @@ namespace ProjectVersion2
 {
     public class WorkGroup
     {
+        //made by: 
+        //23168 Hugo Camps
+        //23175 Albert De Watrigant
+        //23196 Aurelien Delicourt
+        //23172 Jean-Marc Hanna
+        //22842 Julien Msika
+        //22830 Lorenzo Mendes
+
         public List<Student> members;
         public string name;
         public Teacher professor;
@@ -39,15 +47,6 @@ namespace ProjectVersion2
                 }
             }
             return false;
-        }
-        //public void Equal(WorkGroup group)
-        //{
-        //    foreach(Student stud in group)
-        //    {
-        //        if(Student)
-        //    }
-        //}
-        
-
+        }      
     }
 }

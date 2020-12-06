@@ -8,6 +8,14 @@ namespace ProjectVersion2
 {
     public class Teacher : Person
     {
+        //made by: 
+        //23168 Hugo Camps
+        //23175 Albert De Watrigant
+        //23196 Aurelien Delicourt
+        //23172 Jean-Marc Hanna
+        //22842 Julien Msika
+        //22830 Lorenzo Mendes
+
         public List<WorkGroup> groups;
         //public List<string> courses;
         public List<Course> courses;
@@ -81,6 +89,7 @@ namespace ProjectVersion2
             }
             if (coursenotempty == true)
             {
+                Console.WriteLine();
                 Console.WriteLine("type the name of the course where you want to modify marks");
                 string answer =Console.ReadLine();
                 foreach(Course course in this.courses)
@@ -190,8 +199,5 @@ namespace ProjectVersion2
                 }
             }
         }
-
-
-
     }
 }

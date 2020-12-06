@@ -9,6 +9,14 @@ namespace ProjectVersion2
 {
     public class Database_Fees  //template of this datafile: name, surname, id, total fees, due fees, due date, payment method
     {
+        //made by: 
+        //23168 Hugo Camps
+        //23175 Albert De Watrigant
+        //23196 Aurelien Delicourt
+        //23172 Jean-Marc Hanna
+        //22842 Julien Msika
+        //22830 Lorenzo Mendes
+
         public string filepath; //file path      
         List<List<string>> data; //all data related to the file
         List<Person> allstudents;// all the students. used when it is the first time the file is created;
@@ -163,7 +171,20 @@ namespace ProjectVersion2
             }
             return line;
         }
-
+        public void AddStudent(Student stud)
+        {
+            data = Infos();
+            List<string> newstudent = new List<string>();
+            newstudent.Add(stud.name);
+            newstudent.Add(stud.surname);
+            newstudent.Add(stud.ID);
+            newstudent.Add("10000");
+            newstudent.Add("10000");
+            newstudent.Add("12/31");
+            newstudent.Add("One time");
+            data.Add(newstudent);
+            WriteInCsv();
+        }
         public void ModifyDatas()
         {
             this.data = Infos();
@@ -172,17 +193,26 @@ namespace ProjectVersion2
             {
                 string answer = "";
                 Console.WriteLine();
-                while (answer != "exit")
+                while (answer != "exit" && answer!="5")
                 {
-                    data = Infos();
-                    Console.WriteLine("Payment status of : " + data[index][2] + " " + data[index][0] + " " + data[index][1]);
-                    Console.WriteLine("total fees :" + data[index][3] + " Remaining due fees: " + data[index][4] + " Due date: " + data[index][5] + " Payment method : " + data[index][6]);
-                    Console.WriteLine();
+                    try
+                    {
+                        data = Infos();
+                        Console.WriteLine("Payment status of : " + data[index][2] + " " + data[index][0] + " " + data[index][1]);
+                        Console.WriteLine("total fees :" + data[index][3] + " Remaining due fees: " + data[index][4] + " Due date: " + data[index][5] + " Payment method : " + data[index][6]);
+                        Console.WriteLine();
+                    }
+                    catch
+                    {
+
+                    }
+                    
                     Console.WriteLine("Type the number:");
                     Console.WriteLine("1) To modify total due fees.");
                     Console.WriteLine("2) To modify the remaining fees.");
                     Console.WriteLine("3) To modify the due date");
                     Console.WriteLine("4) To modify the payment method.");
+                    Console.WriteLine("5) To remove a student from this database.");
                     Console.WriteLine("type <<exit>> to leave");
                     answer = Console.ReadLine();
                     switch (answer)
@@ -344,6 +374,11 @@ namespace ProjectVersion2
                                     break;
 
                             }
+                            break;
+                        case "5":
+                            DeleteStudent(data[index][2]);
+                            Console.WriteLine("The student has been removed.");
+                            Console.WriteLine();
                             break;
 
                         case "exit":

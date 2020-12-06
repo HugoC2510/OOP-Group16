@@ -9,6 +9,14 @@ namespace ProjectVersion2
 {
     public class Database_Calendar
     {
+        //made by: 
+        //23168 Hugo Camps
+        //23175 Albert De Watrigant
+        //23196 Aurelien Delicourt
+        //23172 Jean-Marc Hanna
+        //22842 Julien Msika
+        //22830 Lorenzo Mendes
+
         public string filepath; //file path
         List<List<string>> data; //all data related to the file
 
@@ -213,10 +221,10 @@ namespace ProjectVersion2
 
         public void DisplayCalendar()
         {
-           
+            data = Infos();
             for (int i = 0; i < data.Count(); i++)
             {
-                for (int j = 0; j < data.ElementAt(i).Count(); j++)
+                for (int j = 0; j < data[i].Count(); j++)
                 {
                     if (j > 0)
                     {
