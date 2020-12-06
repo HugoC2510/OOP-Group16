@@ -1,0 +1,11 @@
+Build Note 06/12
+all files are available under week 8 deposit
+what's new?
+-bug fixed
+-some improvement in the code in order to make it cleaner and easier to read
+-improvement of the user's interface
+-academic calendar added
+-adding the mean of each courses when displaying the marks
+-improvement in the way to add or remove someone from the organization
+
+Last version uploaded on github
