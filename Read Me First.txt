@@ -2,6 +2,7 @@ Hi John,
 
 The work your about to test is from the group 16 and do not involve anyone else.
 We hope that while testing our app your are not going to have any bugs and that your experience will be fluid and enjoyable.
+To avoid you losing time, we have put all our files and our solution into a zip. You open our project in seconds aand you can find it on github on the main branch.
 Please note that our app is based on file storage. For this reason you may have to remember the following in order to have the best experience possible:
 After every action that involve data storage, the action is stored immediately. Despite this, the informations you see on the portal are not immediately updated.
 That is because you have to re log to your portal to see the updated informations. Not doing so may conduct to misunderstanding and eventually some bugs 
